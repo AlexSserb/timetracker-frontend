@@ -1,6 +1,5 @@
 import React, { Component } from "react";
  
-// importing all of these classes from reactstrap module
 import {
   Button,
   Modal,
@@ -12,8 +11,8 @@ import {
   Input,
   Label
 } from "reactstrap";
- 
-// build a class base component
+
+
 class DayModal extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +30,7 @@ class DayModal extends Component {
   handleTimeChange = e => {
     const inputTime = e.target.value;
     const [hours, minutes] = inputTime.split(':');
-    const formattedTime = `${hours}:${minutes}`;
+    const formattedTime = `${hours}.${minutes}`;
     this.setState({ worktime: formattedTime })
   };
  
@@ -44,9 +43,6 @@ class DayModal extends Component {
         <ModalBody>
          
           <Form>
- 
-            {/* 3 formgroups
-            1 title label */}
             <FormGroup>
               <Label for="worktime">Время, потраченное на проект</Label>
               <Input
@@ -59,7 +55,6 @@ class DayModal extends Component {
               />
             </FormGroup>
  
-            {/* 2 last name label */}
             <FormGroup>
               <Label for="projectId">Проект</Label>
               <Input
@@ -71,7 +66,6 @@ class DayModal extends Component {
               />
             </FormGroup>
  
-            {/* 3 patronymic label */}
             <FormGroup>
               <Label for="description">Комментарий</Label>
               <Input
@@ -84,7 +78,7 @@ class DayModal extends Component {
             </FormGroup>
           </Form>
         </ModalBody>
-        {/* create a modal footer */}
+        
         <ModalFooter>
           <Button color="success" onClick={() => onSave(this.state.activeItem)}>
             Save

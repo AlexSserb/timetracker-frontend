@@ -1,32 +1,44 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { Menu as MenuIcon } from '@mui/icons-material';
 
-export default function ButtonAppBar() {
+// Главная панель приложения
+const Appbar = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <div>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
+          <IconButton color="inherit" onClick={handleDrawerOpen}>
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
             TimeTracker
           </Typography>
-          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
-    </Box>
+      <Drawer open={open} onClose={handleDrawerClose}>
+        <List>
+          <ListItem component={Link} to="/">
+            <ListItemText primary="Редактирование рабочего дня" />
+          </ListItem>
+          <ListItem component={Link} to="/userEdit">
+            <ListItemText primary="Редактирование пользователей" />
+          </ListItem>
+        </List>
+      </Drawer>
+    </div>
   );
-}
+};
+
+export default Appbar;
