@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 
 
-class DayModal extends Component {
+class ProjectModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,36 +37,13 @@ class DayModal extends Component {
          
           <Form>
             <FormGroup>
-              <Label for="worktime">Время, потраченное на проект</Label>
-              <Input
-                type="number"
-                step="0.5"
-                name="worktime"
-                value={this.state.activeItem.worktime}
-                onChange={this.handleChange}
-                placeholder="Введите количество часов, потраченное на проект"
-              />
-            </FormGroup>
- 
-            <FormGroup>
-              <Label for="projectId">Проект</Label>
+              <Label for="name">Название</Label>
               <Input
                 type="text"
-                name="projectId"
-                value={this.state.activeItem.projectId}
+                name="name"
+                value={this.state.activeItem.name}
                 onChange={this.handleChange}
-                placeholder="Введите id проекта"
-              />
-            </FormGroup>
- 
-            <FormGroup>
-              <Label for="description">Комментарий</Label>
-              <Input
-                type="text"
-                name="description"
-                value={this.state.activeItem.description}
-                onChange={this.handleChange}
-                placeholder="Введите комментарий"
+                placeholder="Введите название проекта"
               />
             </FormGroup>
           </Form>
@@ -81,4 +58,4 @@ class DayModal extends Component {
     );
   }
 }
-export default DayModal;
+export default ProjectModal;

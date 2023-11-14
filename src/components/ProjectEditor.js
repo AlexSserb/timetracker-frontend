@@ -1,26 +1,17 @@
 import React, { Component } from "react";
 import axios from 'axios';  
-import DayModal from './DayModal';
-import { Input, Form } from "reactstrap";
+import ProjectModal from './ProjectModal';
 import moment from 'moment';
 
-// Редактор рабочего дня.
-// Пользователь редактирует список с проектами, временем и комментариями.
-class DayEditor extends Component {
-  dayFormat = "YYYY-MM-DD";
+// Редактор списка проектов.
+class ProjectEditor extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       activeItem: {
-        time: "",
-        projectId: "",
-        description: "",
-        date: ""
+        name: ""
       },
-      isFinished: false,
-      userId: "eb98c1d1-86ac-4b96-89ca-134998e26751",
-      day: props.day.format(this.dayFormat),
       projectsList: []
     };
 
@@ -32,17 +23,13 @@ class DayEditor extends Component {
   }
   
   refreshList = () => {
-    // Получение списка таймшитов для данного дня
+    // Получение списка проектов
     axios
-      .get(`http://127.0.0.1:8080/timesheet/day/${this.state.day}`)
+      .get(`http://127.0.0.1:8080/dictionary/project`)
       .then(res => this.setState({ projectsList: res.data }))
       .catch(err => console.log(err));
-    //if (this.state.projectsList.length > 0) {
-    //  this.setState({ isFinished: this.state.projectsList[0].finished });
-    //}
   };
  
-  // Main variable to render items on the screen
   renderItems = () => {
     return this.state.projectsList.map((project) => (
       <li
@@ -50,12 +37,9 @@ class DayEditor extends Component {
         className="list-group-item d-flex justify-content-between align-items-center"
       >
         
-        <span>{ project.workTime } ч.</span> 
-        <span>{ project.project.name }</span>
-        <span>{ project.description }</span>
+        <span>{ project.name }</span>
         
-        { this.state.isFinished ? "" : (
-          <div>
+        <div>
             <button
               onClick={() => this.editItem(project)}
               className="btn btn-secondary mr-2"
@@ -69,7 +53,6 @@ class DayEditor extends Component {
               Delete
             </button>
           </div>
-        )}
       </li>
     ));
   };
@@ -86,13 +69,13 @@ class DayEditor extends Component {
     if (item.id) {
       // if old post to edit and submit
       axios
-        .put(`http://127.0.0.1:8080/timesheet/day/${item.id}/`, item)
+        .put(`http://127.0.0.1:8080/dictionary/project`, item)
         .then(() => this.refreshList());
       return;
     }
     // if new post to submit
     axios
-      .post(`http://127.0.0.1:8080/timesheet/day/`, item)
+      .post(`http://127.0.0.1:8080/dictionary/project/${item.name}`)
       .then(() => this.refreshList());
   };
  
@@ -100,15 +83,14 @@ class DayEditor extends Component {
   handleDelete = (item) => {
     alert("delete" + JSON.stringify(item));
     axios
-      .delete(`http://127.0.0.1:8080/timesheet/day/${item.id}/`)
+      .delete(`http://127.0.0.1:8080/dictionary/project/${item.id}`)
       .then((res) => this.refreshList());
   };
   
   // Create item
   createItem = () => {
     const item = { 
-      worktime: "", projectId: "", description: "", finished: false, 
-      date: this.state.day, userId: this.state.userId
+      name: ""
     };
     this.setState({ activeItem: item, modal: !this.state.modal });
   };
@@ -118,15 +100,6 @@ class DayEditor extends Component {
     this.setState({ activeItem: item, modal: !this.state.modal });
   };
 
-  //Send (make day FINISHED)
-  makeItemsFinished = () => {
-    for (let i = 0; i < this.state.projectsList.length; i++) {
-      this.state.projectsList[i].finished = true;
-      axios.put(`http://127.0.0.1:8080/timesheet/day/${this.state.projectsList[i].id}/`, this.state.projectsList[i]);
-    }
-    this.refreshList();
-  }
-
   handleChangeDate = e => {
     this.setState({day: moment(e.target.value).format(this.dayFormat)})
   }
@@ -135,24 +108,13 @@ class DayEditor extends Component {
     return (
       <div>
         <h3 className="text-success text-uppercase text-center my-4">
-          Рабочий день {this.state.day}
+          Проекты
         </h3>
         <div className="row ">
-          <Form><Input
-            type="date"
-            name="day"
-            value={this.state.day}
-            defaultValue={this.state.day}
-            onChange={this.handleChangeDate}
-            onBlur={this.refreshList}
-          /></Form>
           { this.state.isFinished ? "" : (
             <div className="">
               <button onClick={this.createItem} className="btn btn-info">
-                Добавить рабочее время
-              </button>
-              <button onClick={this.makeItemsFinished} className="btn btn-success">
-                Отправить
+                Добавить проект
               </button>
             </div>
           )}
@@ -165,7 +127,7 @@ class DayEditor extends Component {
           </div>
         </div>
         {this.state.modal ? (
-          <DayModal
+          <ProjectModal
             activeItem={this.state.activeItem}
             toggle={this.toggle}
             onSave={this.handleSubmit}
@@ -175,4 +137,4 @@ class DayEditor extends Component {
     );
   }
 }
-export default DayEditor;
+export default ProjectEditor;

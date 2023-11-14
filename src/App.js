@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import DayEditor from "./components/DayEditor";
 import Appbar from "./components/Appbar";
+import ProjectEditor from './components/ProjectEditor';
 
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
       <Appbar/>
       <Routes>
         <Route exact path="/" element={<DayEditor day={moment()}/>} />
-        <Route path="/userEdit" element={<h1>TODO редакт пользователей</h1>} />
+        <Route path="/projectEdit" element={<ProjectEditor/>} />
       </Routes>
     </div>
   );
