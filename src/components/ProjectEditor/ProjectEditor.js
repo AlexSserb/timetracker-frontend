@@ -3,7 +3,7 @@ import axios from 'axios';
 import ProjectModal from './ProjectModal';
 import moment from 'moment';
 
-// Редактор списка проектов.
+// List of projects editor
 class ProjectEditor extends Component {
 
   constructor(props) {
@@ -23,7 +23,7 @@ class ProjectEditor extends Component {
   }
   
   refreshList = () => {
-    // Получение списка проектов
+    // Get list of all projects
     axios
       .get(`http://127.0.0.1:8080/dictionary/project`)
       .then(res => this.setState({ projectsList: res.data }))
@@ -110,9 +110,9 @@ class ProjectEditor extends Component {
         <h3 className="text-success text-uppercase text-center my-4">
           Проекты
         </h3>
-        <div className="row ">
+        <div className="row">
           { this.state.isFinished ? "" : (
-            <div className="">
+            <div className="mb-2">
               <button onClick={this.createItem} className="btn btn-info">
                 Добавить проект
               </button>

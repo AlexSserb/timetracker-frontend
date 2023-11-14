@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Select from "react-select";
  
 import {
   Button,
@@ -16,8 +17,10 @@ import {
 class DayModal extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      activeItem: this.props.activeItem
+      activeItem: this.props.activeItem,
+      projectsList: this.props.allProjectsList
     };
   }
 
@@ -27,7 +30,6 @@ class DayModal extends Component {
     this.setState({ activeItem });
   };
  
-  // rendering modal in the custommodal class received toggle and on save as props,
   render() {
     const { toggle, onSave } = this.props;
     return (
@@ -37,11 +39,11 @@ class DayModal extends Component {
          
           <Form>
             <FormGroup>
-              <Label for="worktime">Время, потраченное на проект</Label>
+              <Label for="workTime">Время, потраченное на проект</Label>
               <Input
                 type="number"
                 step="0.5"
-                name="worktime"
+                name="workTime"
                 value={this.state.activeItem.worktime}
                 onChange={this.handleChange}
                 placeholder="Введите количество часов, потраченное на проект"
@@ -50,6 +52,7 @@ class DayModal extends Component {
  
             <FormGroup>
               <Label for="projectId">Проект</Label>
+              {/* <Select options={this.state.projectsList}/> */}
               <Input
                 type="text"
                 name="projectId"

@@ -4,8 +4,8 @@ import DayModal from './DayModal';
 import { Input, Form } from "reactstrap";
 import moment from 'moment';
 
-// Редактор рабочего дня.
-// Пользователь редактирует список с проектами, временем и комментариями.
+// Work day editor
+// User edit list with projects, times and comments.
 class DayEditor extends Component {
   dayFormat = "YYYY-MM-DD";
 
@@ -13,7 +13,7 @@ class DayEditor extends Component {
     super(props);
     this.state = {
       activeItem: {
-        time: "",
+        workTime: "",
         projectId: "",
         description: "",
         date: ""
@@ -21,7 +21,8 @@ class DayEditor extends Component {
       isFinished: false,
       userId: "eb98c1d1-86ac-4b96-89ca-134998e26751",
       day: props.day.format(this.dayFormat),
-      projectsList: []
+      projectsList: [],
+      allProjectsList: []
     };
 
     this.refreshList();
@@ -32,7 +33,7 @@ class DayEditor extends Component {
   }
   
   refreshList = () => {
-    // Получение списка таймшитов для данного дня
+    // Get list of timesheets for current day
     axios
       .get(`http://127.0.0.1:8080/timesheet/day/${this.state.day}`)
       .then(res => this.setState({ projectsList: res.data }))
@@ -82,17 +83,16 @@ class DayEditor extends Component {
   // Submit an item
   handleSubmit = (item) => {
     this.toggle();
-    alert("save" + JSON.stringify(item));
     if (item.id) {
       // if old post to edit and submit
       axios
-        .put(`http://127.0.0.1:8080/timesheet/day/${item.id}/`, item)
+        .put(`http://127.0.0.1:8080/timesheet/day/${item.id}`, item)
         .then(() => this.refreshList());
       return;
     }
     // if new post to submit
     axios
-      .post(`http://127.0.0.1:8080/timesheet/day/`, item)
+      .post(`http://127.0.0.1:8080/timesheet/day`, item)
       .then(() => this.refreshList());
   };
  
@@ -100,16 +100,18 @@ class DayEditor extends Component {
   handleDelete = (item) => {
     alert("delete" + JSON.stringify(item));
     axios
-      .delete(`http://127.0.0.1:8080/timesheet/day/${item.id}/`)
+      .delete(`http://127.0.0.1:8080/timesheet/day/${item.id}`)
       .then((res) => this.refreshList());
   };
   
   // Create item
   createItem = () => {
     const item = { 
-      worktime: "", projectId: "", description: "", finished: false, 
-      date: this.state.day, userId: this.state.userId
+      projectId: "", userId: this.state.userId, 
+      workTime: "", description: "", 
+      date: this.state.day, finished: false
     };
+    item.workTime = 4;
     this.setState({ activeItem: item, modal: !this.state.modal });
   };
  
@@ -122,14 +124,31 @@ class DayEditor extends Component {
   makeItemsFinished = () => {
     for (let i = 0; i < this.state.projectsList.length; i++) {
       this.state.projectsList[i].finished = true;
-      axios.put(`http://127.0.0.1:8080/timesheet/day/${this.state.projectsList[i].id}/`, this.state.projectsList[i]);
+      axios.put(`http://127.0.0.1:8080/timesheet/day/${this.state.projectsList[i].id}`, this.state.projectsList[i]);
     }
     this.refreshList();
-  }
+  };
 
   handleChangeDate = e => {
     this.setState({day: moment(e.target.value).format(this.dayFormat)})
-  }
+  };
+
+  // Get list of all projects
+  getProjectList = () => {
+    let tempRes = [];
+    let projList = [];
+
+    axios
+      .get(`http://127.0.0.1:8080/dictionary/project`)
+      .then(res => { tempRes = res.data })
+      .catch(err => console.log(err));
+    alert(tempRes.JSON);
+    for (let i = 0; i < tempRes.length; i++) {
+      projList.push({ value: tempRes.id, label: tempRes.name });
+    }
+
+    return projList;
+  };
  
   render() {
     return (
@@ -137,26 +156,25 @@ class DayEditor extends Component {
         <h3 className="text-success text-uppercase text-center my-4">
           Рабочий день {this.state.day}
         </h3>
-        <div className="row ">
-          <Form><Input
-            type="date"
-            name="day"
-            value={this.state.day}
-            defaultValue={this.state.day}
-            onChange={this.handleChangeDate}
-            onBlur={this.refreshList}
-          /></Form>
-          { this.state.isFinished ? "" : (
-            <div className="">
-              <button onClick={this.createItem} className="btn btn-info">
-                Добавить рабочее время
-              </button>
-              <button onClick={this.makeItemsFinished} className="btn btn-success">
-                Отправить
-              </button>
-            </div>
-          )}
-          <div className="col-md-6 col-sm-10 mx-auto p-0">
+        <div className="col-md-6 col-sm-40 mx-auto p-0">
+            <Form className="col-md-3 col-sm-10 mx-auto p-0"><Input
+              type="date"
+              name="day"
+              value={this.state.day}
+              onChange={this.handleChangeDate}
+              onBlur={this.refreshList}
+            /></Form>
+            { this.state.isFinished ? "" : (
+              <div className="">
+                <button onClick={this.createItem} className="btn btn-info m-2">
+                  Добавить проект
+                </button>
+                <button onClick={this.makeItemsFinished} className="btn btn-success m-2">
+                  Отправить
+                </button>
+              </div>
+            )}
+          <div className="col-md-30 col-sm-18 mx-auto p-0">
             <div className="card p-3">
               <ul className="list-group list-group-flush">
                 {this.renderItems()}
@@ -167,6 +185,7 @@ class DayEditor extends Component {
         {this.state.modal ? (
           <DayModal
             activeItem={this.state.activeItem}
+            allProjectsList={this.getProjectList()}
             toggle={this.toggle}
             onSave={this.handleSubmit}
           />

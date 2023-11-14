@@ -3,9 +3,9 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import moment from 'moment';
 
-import DayEditor from "./components/DayEditor";
+import DayEditor from "./components/DayEditor/DayEditor";
 import Appbar from "./components/Appbar";
-import ProjectEditor from './components/ProjectEditor';
+import ProjectEditor from './components/ProjectEditor/ProjectEditor';
 
 
 function App() {

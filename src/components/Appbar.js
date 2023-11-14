@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 
-// Главная панель приложения
+// Main application bar with humburger menu
 const Appbar = () => {
   const [open, setOpen] = useState(false);
 
