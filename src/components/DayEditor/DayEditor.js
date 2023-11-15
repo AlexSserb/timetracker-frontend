@@ -26,6 +26,7 @@ class DayEditor extends Component {
     };
 
     this.refreshList();
+    this.setProjectList();
   }
  
   componentDidMount() {
@@ -82,6 +83,7 @@ class DayEditor extends Component {
  
   // Submit an item
   handleSubmit = (item) => {
+    alert("save " + JSON.stringify(item));
     this.toggle();
     if (item.id) {
       // if old post to edit and submit
@@ -133,21 +135,15 @@ class DayEditor extends Component {
     this.setState({day: moment(e.target.value).format(this.dayFormat)})
   };
 
-  // Get list of all projects
-  getProjectList = () => {
-    let tempRes = [];
-    let projList = [];
-
+  // Set list of all projects
+  setProjectList = () => {
     axios
       .get(`http://127.0.0.1:8080/dictionary/project`)
-      .then(res => { tempRes = res.data })
-      .catch(err => console.log(err));
-    alert(tempRes.JSON);
-    for (let i = 0; i < tempRes.length; i++) {
-      projList.push({ value: tempRes.id, label: tempRes.name });
-    }
-
-    return projList;
+      .then(res => {
+        let projects = res.data.map(proj => { return { value: proj.id, label: proj.name }});
+        
+        this.setState({ allProjectsList: projects });
+      });
   };
  
   render() {
@@ -156,7 +152,7 @@ class DayEditor extends Component {
         <h3 className="text-success text-uppercase text-center my-4">
           Рабочий день {this.state.day}
         </h3>
-        <div className="col-md-6 col-sm-40 mx-auto p-0">
+        <div className="col-md-6 col-sm-60 mx-auto p-0">
             <Form className="col-md-3 col-sm-10 mx-auto p-0"><Input
               type="date"
               name="day"
@@ -185,7 +181,7 @@ class DayEditor extends Component {
         {this.state.modal ? (
           <DayModal
             activeItem={this.state.activeItem}
-            allProjectsList={this.getProjectList()}
+            allProjectsList={this.state.allProjectsList}
             toggle={this.toggle}
             onSave={this.handleSubmit}
           />

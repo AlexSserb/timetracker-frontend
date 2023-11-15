@@ -20,7 +20,7 @@ class DayModal extends Component {
 
     this.state = {
       activeItem: this.props.activeItem,
-      projectsList: this.props.allProjectsList
+      allProjectsList: this.props.allProjectsList
     };
   }
 
@@ -29,7 +29,18 @@ class DayModal extends Component {
     const activeItem = { ...this.state.activeItem, [name]: value };
     this.setState({ activeItem });
   };
- 
+
+  getValue = () => {
+    let projId = this.state.activeItem.projectId;
+
+    return projId ? this.state.allProjectsList.find(p => p.value === projId) : '';
+  }
+
+  onChange = (newValue) => {
+    const activeItem = { ...this.state.activeItem, projectId: newValue.value };
+    this.setState({ activeItem });
+  }
+
   render() {
     const { toggle, onSave } = this.props;
     return (
@@ -52,19 +63,20 @@ class DayModal extends Component {
  
             <FormGroup>
               <Label for="projectId">Проект</Label>
-              {/* <Select options={this.state.projectsList}/> */}
-              <Input
-                type="text"
-                name="projectId"
-                value={this.state.activeItem.projectId}
-                onChange={this.handleChange}
-                placeholder="Введите id проекта"
+              {/* <Select options={this.state.allProjectsList}/> */}
+              <Select 
+                required
+                onChange={this.onChange}
+                value={this.getValue()}
+                options={this.state.allProjectsList} 
+                placeholder="Выберите проект"
               />
             </FormGroup>
  
             <FormGroup>
               <Label for="description">Комментарий</Label>
               <Input
+                required
                 type="text"
                 name="description"
                 value={this.state.activeItem.description}
