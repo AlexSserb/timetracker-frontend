@@ -153,23 +153,23 @@ class DayEditor extends Component {
           Рабочий день {this.state.day}
         </h3>
         <div className="col-md-6 col-sm-60 mx-auto p-0">
-            <Form className="col-md-3 col-sm-10 mx-auto p-0"><Input
-              type="date"
-              name="day"
-              value={this.state.day}
-              onChange={this.handleChangeDate}
-              onBlur={this.refreshList}
-            /></Form>
-            { this.state.isFinished ? "" : (
-              <div className="">
-                <button onClick={this.createItem} className="btn btn-info m-2">
-                  Добавить проект
-                </button>
-                <button onClick={this.makeItemsFinished} className="btn btn-success m-2">
-                  Отправить
-                </button>
-              </div>
-            )}
+          <Form className="col-md-3 col-sm-10 mx-auto p-0"><Input
+            type="date"
+            name="day"
+            value={this.state.day}
+            onChange={this.handleChangeDate}
+            onBlur={this.refreshList}
+          /></Form>
+          { this.state.isFinished ? "" : (
+            <div className="">
+              <button onClick={this.createItem} className="btn btn-info m-2">
+                Добавить проект
+              </button>
+              <button onClick={this.makeItemsFinished} className="btn btn-success m-2">
+                Отправить
+              </button>
+            </div>
+          )}
           <div className="col-md-30 col-sm-18 mx-auto p-0">
             <div className="card p-3">
               <ul className="list-group list-group-flush">
