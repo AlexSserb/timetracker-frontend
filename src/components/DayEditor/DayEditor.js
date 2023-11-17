@@ -19,7 +19,7 @@ class DayEditor extends Component {
         date: ""
       },
       isFinished: false,
-      userId: "eb98c1d1-86ac-4b96-89ca-134998e26751",
+      userId: "58162a1e-b7a4-4a15-8852-5aee1e4b4833",
       day: props.day.format(this.dayFormat),
       projectsList: [],
       allProjectsList: []
@@ -100,7 +100,7 @@ class DayEditor extends Component {
  
   // Delete item
   handleDelete = (item) => {
-    alert("delete" + JSON.stringify(item));
+    alert("delete" + JSON.stringify(item.id));
     axios
       .delete(`http://127.0.0.1:8080/timesheet/day/${item.id}`)
       .then((res) => this.refreshList());

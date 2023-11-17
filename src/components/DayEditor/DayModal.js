@@ -63,7 +63,6 @@ class DayModal extends Component {
  
             <FormGroup>
               <Label for="projectId">Проект</Label>
-              {/* <Select options={this.state.allProjectsList}/> */}
               <Select 
                 required
                 onChange={this.onChange}
