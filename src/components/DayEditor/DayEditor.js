@@ -129,10 +129,10 @@ class DayEditor extends Component {
 
     for (let i = 0; i < this.state.projectsList.length; i++) {
       this.state.projectsList[i].finished = true;
-      timesheet_ids.push(this.state.projectsList[i].project.id);
+      timesheet_ids.push(this.state.projectsList[i].id);
     }
 
-    axios.put(`http://127.0.0.1:8080/timesheet/day/finish`, timesheet_ids);
+    axios.put(`http://127.0.0.1:8080/timesheet/day/finish`, { "timesheetIDs": timesheet_ids });
     this.refreshList();
   };
 
