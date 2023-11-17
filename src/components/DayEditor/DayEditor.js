@@ -39,9 +39,9 @@ class DayEditor extends Component {
       .get(`http://127.0.0.1:8080/timesheet/day/${this.state.day}`)
       .then(res => this.setState({ projectsList: res.data }))
       .catch(err => console.log(err));
-    //if (this.state.projectsList.length > 0) {
-    //  this.setState({ isFinished: this.state.projectsList[0].finished });
-    //}
+    if (this.state.projectsList.length > 0) {
+      this.setState({ isFinished: this.state.projectsList[0].finished });
+    }
   };
  
   // Main variable to render items on the screen
