@@ -85,6 +85,7 @@ class DayEditor extends Component {
   handleSubmit = (item) => {
     alert("save " + JSON.stringify(item));
     this.toggle();
+    item.userId = this.state.userId;
     if (item.id) {
       // if old post to edit and submit
       axios
