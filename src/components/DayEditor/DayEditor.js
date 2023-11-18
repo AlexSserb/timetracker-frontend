@@ -39,10 +39,13 @@ class DayEditor extends Component {
     axios
       .get(`http://127.0.0.1:8080/timesheet/day/${this.state.day}`)
       .then(res => {
+        if (res.data.length > 0) {
+          this.setState({ isFinished: res.data[0].finished });
+        }
+        else {
+          this.setState({ isFinished: false });
+        }
         this.setState({ projectsList: res.data });
-        if (this.state.projectsList.length > 0) {
-          this.setState({ isFinished: this.state.projectsList[0].finished });
-        };
       })
       .catch(err => console.log(err));
   };
