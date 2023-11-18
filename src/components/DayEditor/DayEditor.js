@@ -4,6 +4,7 @@ import DayModal from './DayModal';
 import { Input, Form } from "reactstrap";
 import moment from 'moment';
 
+
 // Work day editor
 // User edit list with projects, times and comments.
 class DayEditor extends Component {

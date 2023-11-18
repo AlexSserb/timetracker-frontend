@@ -4,6 +4,7 @@ import moment from 'moment';
 import { Input, Form, FormGroup, Label, Button } from "reactstrap";
 import Select from "react-select";
 
+
 // List of projects editor
 class Statistics extends Component {
   dayFormat = "YYYY-MM-DD";
