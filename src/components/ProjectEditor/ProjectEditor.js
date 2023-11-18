@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios';  
 import ProjectModal from './ProjectModal';
 import moment from 'moment';
+import { Table } from "reactstrap";
 
 // List of projects editor
 class ProjectEditor extends Component {
@@ -32,17 +33,13 @@ class ProjectEditor extends Component {
  
   renderItems = () => {
     return this.state.projectsList.map((project) => (
-      <li
-        key={project.id}
-        className="list-group-item d-flex justify-content-between align-items-center"
-      >
-        
-        <span>{ project.name }</span>
-        
-        <div>
+      <tr> 
+        <td>{project.name} ч.</td>
+        { this.state.isFinished ? "" : (
+          <div>
             <button
               onClick={() => this.editItem(project)}
-              className="btn btn-secondary mr-2"
+              className="btn btn-secondary"
             >
               Edit
             </button>
@@ -53,7 +50,8 @@ class ProjectEditor extends Component {
               Delete
             </button>
           </div>
-      </li>
+        )}
+      </tr>
     ));
   };
  
@@ -110,7 +108,7 @@ class ProjectEditor extends Component {
         <h3 className="text-success text-uppercase text-center my-4">
           Проекты
         </h3>
-        <div className="row">
+        <div className="col-md-3 col-sm-60 mx-auto p-0">
           { this.state.isFinished ? "" : (
             <div className="mb-2">
               <button onClick={this.createItem} className="btn btn-info">
@@ -118,13 +116,16 @@ class ProjectEditor extends Component {
               </button>
             </div>
           )}
-          <div className="col-md-6 col-sm-10 mx-auto p-0">
-            <div className="card p-3">
-              <ul className="list-group list-group-flush">
-                {this.renderItems()}
-              </ul>
-            </div>
-          </div>
+          <Table> 
+            <thead> 
+              <tr>
+                <th>Проект</th>
+              </tr> 
+            </thead> 
+            <tbody> 
+              {this.renderItems()}
+            </tbody> 
+          </Table>
         </div>
         {this.state.modal ? (
           <ProjectModal

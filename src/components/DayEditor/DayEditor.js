@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';  
 import DayModal from './DayModal';
-import { Input, Form } from "reactstrap";
+import { Input, Form, Table } from "reactstrap";
 import moment from 'moment';
 
 
@@ -20,7 +20,7 @@ class DayEditor extends Component {
         date: ""
       },
       isFinished: false,
-      userId: "58162a1e-b7a4-4a15-8852-5aee1e4b4833",
+      userId: props.userId,
       day: props.day.format(this.dayFormat),
       projectsList: [],
       allProjectsList: []
@@ -38,30 +38,27 @@ class DayEditor extends Component {
     // Get list of timesheets for current day
     axios
       .get(`http://127.0.0.1:8080/timesheet/day/${this.state.day}`)
-      .then(res => this.setState({ projectsList: res.data }))
+      .then(res => {
+        this.setState({ projectsList: res.data });
+        if (this.state.projectsList.length > 0) {
+          this.setState({ isFinished: this.state.projectsList[0].finished });
+        };
+      })
       .catch(err => console.log(err));
-    if (this.state.projectsList.length > 0) {
-      this.setState({ isFinished: this.state.projectsList[0].finished });
-    }
   };
  
   // Main variable to render items on the screen
   renderItems = () => {
     return this.state.projectsList.map((project) => (
-      <li
-        key={project.id}
-        className="list-group-item d-flex justify-content-between align-items-center"
-      >
-        
-        <span>{ project.workTime } ч.</span> 
-        <span>{ project.project.name }</span>
-        <span>{ project.description }</span>
-        
+      <tr> 
+        <td>{project.workTime} ч.</td>
+        <td>{project.project.name}</td> 
+        <td>{project.description}</td>
         { this.state.isFinished ? "" : (
           <div>
             <button
               onClick={() => this.editItem(project)}
-              className="btn btn-secondary mr-2"
+              className="btn btn-secondary"
             >
               Edit
             </button>
@@ -73,7 +70,7 @@ class DayEditor extends Component {
             </button>
           </div>
         )}
-      </li>
+      </tr>
     ));
   };
  
@@ -176,13 +173,18 @@ class DayEditor extends Component {
               </button>
             </div>
           )}
-          <div className="col-md-30 col-sm-18 mx-auto p-0">
-            <div className="card p-3">
-              <ul className="list-group list-group-flush">
-                {this.renderItems()}
-              </ul>
-            </div>
-          </div>
+          <Table> 
+            <thead> 
+              <tr> 
+                <th>Время</th> 
+                <th>Проект</th>
+                <th>Комментарий</th> 
+              </tr> 
+            </thead> 
+            <tbody> 
+              {this.renderItems()}
+            </tbody> 
+          </Table> 
         </div>
         {this.state.modal ? (
           <DayModal
