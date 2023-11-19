@@ -171,7 +171,8 @@ class DayEditor extends Component {
               <button onClick={this.createItem} className="btn btn-info m-2">
                 Добавить проект
               </button>
-              <button onClick={this.makeItemsFinished} className="btn btn-success m-2">
+              <button onClick={this.makeItemsFinished} className="btn btn-success m-2" 
+                disabled={this.state.projectsList.length === 0}>
                 Отправить
               </button>
             </div>
