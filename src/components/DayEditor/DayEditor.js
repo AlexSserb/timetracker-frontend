@@ -23,7 +23,8 @@ class DayEditor extends Component {
       userId: props.userId,
       day: props.day.format(this.dayFormat),
       projectsList: [],
-      allProjectsList: []
+      allProjectsList: [],
+      sumWorkTime: 0
     };
 
     this.refreshList();
@@ -46,6 +47,7 @@ class DayEditor extends Component {
           this.setState({ isFinished: false });
         }
         this.setState({ projectsList: res.data });
+        this.calcSumWorkTime(res.data);
       })
       .catch(err => console.log(err));
   };
@@ -151,6 +153,12 @@ class DayEditor extends Component {
         this.setState({ allProjectsList: projects });
       });
   };
+
+  calcSumWorkTime = (projectsList) => {
+    let sum = 0;
+    projectsList.forEach((proj) => sum += proj.workTime);
+    this.setState({ sumWorkTime: sum });
+  }
  
   render() {
     return (
@@ -175,6 +183,9 @@ class DayEditor extends Component {
                 disabled={this.state.projectsList.length === 0}>
                 Отправить
               </button>
+              <div>
+                Часов отработано: {this.state.sumWorkTime}
+              </div>
             </div>
           )}
           <Table className="mt-4"> 
