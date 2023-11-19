@@ -19,9 +19,11 @@ class DayModal extends Component {
     super(props);
 
     this.state = {
-      activeItem: this.props.activeItem,
-      allProjectsList: this.props.allProjectsList
+      allProjectsList: this.props.allProjectsList,
+      activeItem: this.props.activeItem
     };
+
+    alert(JSON.stringify(this.state.activeItem));
   }
 
   handleChange = e => {
@@ -54,6 +56,7 @@ class DayModal extends Component {
               <Input
                 type="number"
                 step="0.5"
+                min={0.5} max={24}
                 name="workTime"
                 value={this.state.activeItem.worktime}
                 onChange={this.handleChange}

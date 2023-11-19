@@ -176,7 +176,7 @@ class DayEditor extends Component {
               </button>
             </div>
           )}
-          <Table> 
+          <Table className="mt-4"> 
             <thead> 
               <tr> 
                 <th>Время</th> 

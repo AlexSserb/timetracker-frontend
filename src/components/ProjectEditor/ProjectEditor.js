@@ -34,7 +34,7 @@ class ProjectEditor extends Component {
   renderItems = () => {
     return this.state.projectsList.map((project) => (
       <tr> 
-        <td>{project.name} ч.</td>
+        <td>{project.name}</td>
         { this.state.isFinished ? "" : (
           <div>
             <button
