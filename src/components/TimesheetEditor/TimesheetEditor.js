@@ -1,13 +1,15 @@
 import React, { Component } from "react";
-import axios from 'axios';  
-import DayModal from './DayModal';
+import DayModal from "./TimesheetModal";
+import TimesheetService from "./../../services/timesheet.service";
 import { Input, Form, Table } from "reactstrap";
-import moment from 'moment';
+import moment from "moment";
+import authHeader from "../../services/auth-header";
+import projectService from "../../services/project.service";
 
 
 // Work day editor
 // User edit list with projects, times and comments.
-class DayEditor extends Component {
+class TimesheetEditor extends Component {
   dayFormat = "YYYY-MM-DD";
 
   constructor(props) {
@@ -37,8 +39,7 @@ class DayEditor extends Component {
   
   refreshList = () => {
     // Get list of timesheets for current day
-    axios
-      .get(`http://127.0.0.1:8080/timesheet/day/${this.state.day}`)
+    TimesheetService.getTimesheetsForCurrentDay(this.state.day)
       .then(res => {
         if (res.data.length > 0) {
           this.setState({ isFinished: res.data[0].finished });
@@ -91,23 +92,20 @@ class DayEditor extends Component {
     item.userId = this.state.userId;
     if (item.id) {
       // if old post to edit and submit
-      axios
-        .put(`http://127.0.0.1:8080/timesheet/day/${item.id}`, item)
+      TimesheetService.putTimesheet(item)
         .then(() => this.refreshList())
         .catch(err => console.log(err));
       return;
     }
     // if new post to submit
-    axios
-      .post(`http://127.0.0.1:8080/timesheet/day`, item)
+    TimesheetService.postTimesheet(item)
       .then(() => this.refreshList())
       .catch(err => console.log(err));
   };
  
   // Delete item
   handleDelete = (item) => {
-    axios
-      .delete(`http://127.0.0.1:8080/timesheet/day/${item.id}`)
+    TimesheetService.deleteTimesheet(item)
       .then(() => this.refreshList())
       .catch(err => console.log(err));
   };
@@ -130,15 +128,14 @@ class DayEditor extends Component {
 
   //Send (make day FINISHED)
   makeItemsFinished = () => {
-    let timesheet_ids = [];
+    let timesheetIDs = [];
 
     for (let i = 0; i < this.state.projectsList.length; i++) {
       this.state.projectsList[i].finished = true;
-      timesheet_ids.push(this.state.projectsList[i].id);
+      timesheetIDs.push(this.state.projectsList[i].id);
     }
 
-    axios
-      .put(`http://127.0.0.1:8080/timesheet/day/finish`, { "timesheetIDs": timesheet_ids })
+    TimesheetService.putTimesheetsFinished(timesheetIDs)
       .catch(err => console.log(err));;
     this.refreshList();
   };
@@ -149,8 +146,7 @@ class DayEditor extends Component {
 
   // Set list of all projects
   setProjectList = () => {
-    axios
-      .get(`http://127.0.0.1:8080/dictionary/project`)
+    projectService.getAllProjects()
       .then(res => {
         let projects = res.data.map(proj => { return { value: proj.id, label: proj.name }});
         
@@ -218,4 +214,4 @@ class DayEditor extends Component {
     );
   }
 }
-export default DayEditor;
+export default TimesheetEditor;

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import axios from 'axios';  
 import ProjectModal from './ProjectModal';
 import moment from 'moment';
 import { Table } from "reactstrap";
+import ProjectService from "../../services/project.service";
 
 // List of projects editor
 class ProjectEditor extends Component {
@@ -24,9 +24,7 @@ class ProjectEditor extends Component {
   }
   
   refreshList = () => {
-    // Get list of all projects
-    axios
-      .get(`http://127.0.0.1:8080/dictionary/project`)
+    ProjectService.getAllProjects()
       .then(res => this.setState({ projectsList: res.data }))
       .catch(err => console.log(err));
   };
@@ -66,15 +64,13 @@ class ProjectEditor extends Component {
     alert("save" + JSON.stringify(item));
     if (item.id) {
       // if old post to edit and submit
-      axios
-        .put(`http://127.0.0.1:8080/dictionary/project`, item)
+      ProjectService.putProject(item)
         .then(() => this.refreshList())
         .catch(err => console.log(err));
       return;
     }
     // if new post to submit
-    axios
-      .post(`http://127.0.0.1:8080/dictionary/project/${item.name}`)
+    ProjectService.postProject(item)
       .then(() => this.refreshList())
       .catch(err => console.log(err));
   };
@@ -82,8 +78,7 @@ class ProjectEditor extends Component {
   // Delete item
   handleDelete = (item) => {
     alert("delete" + JSON.stringify(item));
-    axios
-      .delete(`http://127.0.0.1:8080/dictionary/project/${item.id}`)
+    ProjectService.deleteProject(item)
       .then((res) => this.refreshList())
       .catch(err => console.log(err));
   };
