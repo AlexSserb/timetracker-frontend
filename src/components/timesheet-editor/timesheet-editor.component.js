@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import DayModal from "./TimesheetModal";
-import TimesheetService from "./../../services/timesheet.service";
+import DayModal from "./timesheet-modal.component";
+import TimesheetService from "../../services/timesheet.service";
 import { Input, Form, Table } from "reactstrap";
 import moment from "moment";
-import authHeader from "../../services/auth-header";
 import projectService from "../../services/project.service";
 
 
@@ -189,18 +188,22 @@ class TimesheetEditor extends Component {
               </div>
             </div>
           )}
-          <Table className="mt-4"> 
-            <thead> 
-              <tr> 
-                <th>Время</th> 
-                <th>Проект</th>
-                <th>Комментарий</th> 
-              </tr> 
-            </thead> 
-            <tbody> 
-              {this.renderItems()}
-            </tbody> 
-          </Table> 
+          { 
+            this.state.projectsList.length > 0 ? 
+            <Table className="mt-4"> 
+              <thead> 
+                <tr> 
+                  <th>Время</th> 
+                  <th>Проект</th>
+                  <th>Комментарий</th> 
+                </tr> 
+              </thead> 
+              <tbody> 
+                {this.renderItems()}
+              </tbody> 
+            </Table> 
+            : <div className="mt-3">Нет таймшитов для данной даты</div>
+          }
         </div>
         {this.state.modal ? (
           <DayModal

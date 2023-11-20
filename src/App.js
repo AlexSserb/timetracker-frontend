@@ -3,11 +3,12 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import moment from 'moment';
 
-import TimesheetEditor from "./components/TimesheetEditor/TimesheetEditor";
-import Appbar from "./components/Appbar";
-import ProjectEditor from './components/ProjectEditor/ProjectEditor';
-import Statistics from './components/Statistics/Statistics';
-import Profile from './components/Profile/Profile';
+import TimesheetEditor from "./components/timesheet-editor/timesheet-editor.component";
+import Appbar from "./components/appbar.component";
+import ProjectEditor from './components/project-editor/project-editor.component';
+import Statistics from './components/statistics/statistics.component';
+import Profile from './components/profile/profile.component';
+import Login from './components/auth/login.component'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/projectEdit" element={<ProjectEditor/>} />
         <Route path="/statistics" element={<Statistics/>} />
         <Route path="/profile" element={<Profile/>} />
+        <Route path="/login" element={<Login/>} />
       </Routes>
     </div>
   );

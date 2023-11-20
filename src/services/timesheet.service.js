@@ -9,7 +9,7 @@ class TimesheetService {
   }
 
   putTimesheet(timesheet) {
-    return axios.put(API_URL + `/${timesheet.id}`, timesheet);
+    return axios.put(API_URL + `/${timesheet.id}`, timesheet, { headers: authHeader() });
   }
 
   postTimesheet(timesheet) {

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ProjectModal from './ProjectModal';
+import ProjectModal from './project-modal.component';
 import moment from 'moment';
 import { Table } from "reactstrap";
 import ProjectService from "../../services/project.service";
