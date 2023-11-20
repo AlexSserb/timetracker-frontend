@@ -68,13 +68,15 @@ class ProjectEditor extends Component {
       // if old post to edit and submit
       axios
         .put(`http://127.0.0.1:8080/dictionary/project`, item)
-        .then(() => this.refreshList());
+        .then(() => this.refreshList())
+        .catch(err => console.log(err));
       return;
     }
     // if new post to submit
     axios
       .post(`http://127.0.0.1:8080/dictionary/project/${item.name}`)
-      .then(() => this.refreshList());
+      .then(() => this.refreshList())
+      .catch(err => console.log(err));
   };
  
   // Delete item
@@ -82,7 +84,8 @@ class ProjectEditor extends Component {
     alert("delete" + JSON.stringify(item));
     axios
       .delete(`http://127.0.0.1:8080/dictionary/project/${item.id}`)
-      .then((res) => this.refreshList());
+      .then((res) => this.refreshList())
+      .catch(err => console.log(err));
   };
   
   // Create item

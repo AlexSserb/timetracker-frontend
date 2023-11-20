@@ -93,21 +93,23 @@ class DayEditor extends Component {
       // if old post to edit and submit
       axios
         .put(`http://127.0.0.1:8080/timesheet/day/${item.id}`, item)
-        .then(() => this.refreshList());
+        .then(() => this.refreshList())
+        .catch(err => console.log(err));
       return;
     }
     // if new post to submit
     axios
       .post(`http://127.0.0.1:8080/timesheet/day`, item)
-      .then(() => this.refreshList());
+      .then(() => this.refreshList())
+      .catch(err => console.log(err));
   };
  
   // Delete item
   handleDelete = (item) => {
-    alert("delete" + JSON.stringify(item.id));
     axios
       .delete(`http://127.0.0.1:8080/timesheet/day/${item.id}`)
-      .then((res) => this.refreshList());
+      .then(() => this.refreshList())
+      .catch(err => console.log(err));
   };
   
   // Create item
@@ -135,7 +137,9 @@ class DayEditor extends Component {
       timesheet_ids.push(this.state.projectsList[i].id);
     }
 
-    axios.put(`http://127.0.0.1:8080/timesheet/day/finish`, { "timesheetIDs": timesheet_ids });
+    axios
+      .put(`http://127.0.0.1:8080/timesheet/day/finish`, { "timesheetIDs": timesheet_ids })
+      .catch(err => console.log(err));;
     this.refreshList();
   };
 
@@ -151,7 +155,8 @@ class DayEditor extends Component {
         let projects = res.data.map(proj => { return { value: proj.id, label: proj.name }});
         
         this.setState({ allProjectsList: projects });
-      });
+      })
+      .catch(err => console.log(err));
   };
 
   calcSumWorkTime = (projectsList) => {

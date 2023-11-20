@@ -95,7 +95,8 @@ class Statistics extends Component {
         let projects = res.data.map(proj => { return { value: proj.id, label: proj.name }});
         projects.unshift({ value: 0, label: "Все проекты" });
         this.setState({ allProjectsList: projects });
-      });
+      })
+      .catch(err => console.log(err));
   };
 
   onChange = (newValue) => {
