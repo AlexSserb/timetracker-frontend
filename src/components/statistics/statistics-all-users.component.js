@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import axios from 'axios'; 
 import moment from 'moment';
 import { Input, Form, FormGroup, Label, Button } from "reactstrap";
 import Select from "react-select";
+import projectService from "../../services/project.service";
+import statisticsService from "../../services/statistics.service";
 
-
-// List of projects editor
-class Statistics extends Component {
+// Statistics of all users for one/all projects
+class StatisticsAllUsers extends Component {
   dayFormat = "YYYY-MM-DD";
 
   constructor(props) {
@@ -70,9 +70,7 @@ class Statistics extends Component {
  
   // Submit an item
   handleSubmit = () => {
-    axios
-      .get(`http://127.0.0.1:8080/statistic/${this.state.dateStart}/${this.state.dateEnd}` + 
-        (this.state.curProject !== 0 ? `/${this.state.curProject}` : ''))
+    statisticsService.getStatAllUsers(this.state.dateStart, this.state.dateEnd, this.state.curProject)
       .then(res => this.setState({ usersList: res.data }))
       .catch(err => this.setState({ usersList: [] }));
   };
@@ -89,8 +87,7 @@ class Statistics extends Component {
 
   // Set list of all projects
   setProjectList = () => {
-    axios
-      .get(`http://127.0.0.1:8080/dictionary/project`)
+    projectService.getAllProjects()
       .then(res => {
         let projects = res.data.map(proj => { return { value: proj.id, label: proj.name }});
         projects.unshift({ value: 0, label: "Все проекты" });
@@ -107,7 +104,7 @@ class Statistics extends Component {
     return (
       <div>
         <h3 className="text-success text-uppercase text-center my-4">
-          Статистика
+          Статистика всех пользователей
         </h3>
         <div className="row">
           <Form className="col-md-3 col-sm-10 mx-auto p-0">
@@ -130,6 +127,7 @@ class Statistics extends Component {
                 onChange={this.onChange}
                 value={this.getValue()}
                 options={this.state.allProjectsList}
+                isSearchable={true}
               />
             </FormGroup>
 						<Button color="success" onClick={this.handleSubmit}>
@@ -156,4 +154,4 @@ class Statistics extends Component {
     );
   }
 }
-export default Statistics;
+export default StatisticsAllUsers;
