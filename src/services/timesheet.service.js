@@ -1,11 +1,11 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const API_URL = "http://127.0.0.1:8080/timesheet/day";
+const API_URL = "timesheet/day";
 
 class TimesheetService {
   getTimesheetsForCurrentDay(day) {
-    return axios.get(API_URL + `/${day}`);
+    return axios.get(API_URL + `/${day}`, { headers: authHeader() });
   }
 
   putTimesheet(timesheet) {
@@ -13,16 +13,16 @@ class TimesheetService {
   }
 
   postTimesheet(timesheet) {
-    return axios.post(API_URL, timesheet);
+    return axios.post(API_URL, timesheet, { headers: authHeader() });
   }
 
   deleteTimesheet(timesheet) {
-    return axios.delete(API_URL + `/${timesheet.id}`);
+    return axios.delete(API_URL + `/${timesheet.id}`, { headers: authHeader() });
   }
 
   putTimesheetsFinished(timesheetIDs) {
     return axios
-      .put(API_URL + "/finish", { "timesheetIDs": timesheetIDs })
+      .put(API_URL + "/finish", { "timesheetIDs": timesheetIDs }, { headers: authHeader() })
   }
 }
 

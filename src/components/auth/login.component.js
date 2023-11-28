@@ -18,7 +18,7 @@ class Login extends Component {
       password: "",
       message: ""
     };
-  }
+  };
 
 	handleChange = e => {
     let { name, value } = e.target;
@@ -33,11 +33,12 @@ class Login extends Component {
       loading: true
     });
 
-    AuthService.login(this.state.email, this.state.password).then(
-			() => {
-				this.props.router.navigate("/profile");
-				window.location.reload();
-			},
+    AuthService.login(this.state.email, this.state.password)
+      .then(response => {
+				if (response.data.token) {
+					localStorage.setItem("user", JSON.stringify(response.data));
+				}
+      },
 			error => {
 				const resMessage =
 					(error.response &&

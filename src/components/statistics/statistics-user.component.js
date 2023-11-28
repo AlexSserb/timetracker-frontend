@@ -5,7 +5,7 @@ import Select from "react-select";
 
 import userService from "../../services/user.service";
 import projectService from "../../services/project.service";
-import chartStatUser from "./chart-stat-user.component"
+import chartStatUser from "./chart-stat-user.component";
 
 // Statistic of one user for several projects
 class StatisticsUser extends Component {
@@ -35,7 +35,16 @@ class StatisticsUser extends Component {
 
   // Submit an item
   handleSubmit = () => {
-    // TODO
+    let projectIDs = [];
+    for (let i = 0; i < this.state.selectedProjects.length; i++) {
+      projectIDs.push(this.state.selectedProjects[i].value);
+    }
+    alert(JSON.stringify({
+      "date": this.state.dateWeekStart,
+      "projectIDs": projectIDs,
+      "selectedUser":  this.state.selectedUser
+    }));
+    projectService.getStatOneUserByWeeks(this.state.date, projectIDs, this.state.selectedUser);
   };
   
   handleChangeDate = e => {
@@ -64,6 +73,9 @@ class StatisticsUser extends Component {
       .then(res => {
         let users = res.data.map(user => { return { value: user.id, label: user.name }});
         this.setState({ allUsersList: users });
+        if (users.length > 0) {
+          this.setState({ selectedUser: users[0].value });
+        }
       })
       .catch(err => console.log(err));
   };
