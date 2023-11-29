@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Form,
@@ -6,37 +6,34 @@ import {
   Input,
   Label
 } from "reactstrap";
+import { useNavigate } from "react-router-dom";
 
 import AuthService from "../../services/auth.service";
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      email: "",
-      password: "",
-      message: ""
-    };
-  };
+function Login(props) {
+  const [inputField, setInputField] = useState({
+    email: "",
+    password: ""
+  })
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
-	handleChange = e => {
-    let { name, value } = e.target;
-    this.setState({ [name]: value });
-  };
+  const inputsHandler = (e) => {
+    setInputField({ ...inputField, [e.target.name]: e.target.value });
+  }
 
-  handleLogin = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
 
-    this.setState({
-      message: "",
-      loading: true
-    });
+    setMessage("");
 
-    AuthService.login(this.state.email, this.state.password)
+    alert(`email = ${inputField.email}, psw = ${inputField.password}`);
+    AuthService.login(inputField.email, inputField.password)
       .then(response => {
 				if (response.data.token) {
 					localStorage.setItem("user", JSON.stringify(response.data));
+          navigate("/");
 				}
       },
 			error => {
@@ -47,54 +44,51 @@ class Login extends Component {
 					error.message ||
 					error.toString();
 
-				this.setState({ message: resMessage });
+        setMessage(resMessage);
 			}
 		);
   }
 
-  render() {
-    return (
-      <div className="card card-container col-md-3 col-sm-60 mx-auto p-0 mt-5">
-				<h3 className="text-success text-uppercase text-center mt-4">
-          Вход
-        </h3>
-        <div className="m-4">
-          <Form>
-            <FormGroup>
-              <Label for="email">Почта</Label>
-              <Input
-                type="text"
-                name="email"
-                value={this.state.email}
-                onChange={this.handleChange}
-              />
-            </FormGroup>
+  return (
+    <div className="card card-container col-md-3 col-sm-60 mx-auto p-0 mt-5">
+	  	<h3 className="text-success text-uppercase text-center mt-4">
+        Вход
+      </h3>
+      <div className="m-4">
+        <Form>
+          <FormGroup>
+            <Label for="email">Почта</Label>
+            <Input
+              type="text"
+              name="email"
+              value={inputField.email}
+              onChange={inputsHandler}
+            />
+          </FormGroup>
 
-            <FormGroup>
-              <Label for="password">Пароль</Label>
-              <Input
-                type="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-
-            {this.state.message && (
-              <div className="form-group">
-                <div className="alert alert-danger" role="alert">
-                  {this.state.message}
-                </div>
+          <FormGroup>
+            <Label for="password">Пароль</Label>
+            <Input
+              type="password"
+              name="password"
+              value={inputField.password}
+              onChange={inputsHandler}
+            />
+          </FormGroup>
+          {message && (
+            <div className="form-group">
+              <div className="alert alert-danger" role="alert">
+                {message}
               </div>
-            )}
-            <Button color="success" onClick={this.handleLogin}>
-            	Войти
-          	</Button>
-          </Form>
-        </div>
+            </div>
+          )}
+          <Button color="success" onClick={handleLogin}>
+          	Войти
+        	</Button>
+        </Form>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Login;
