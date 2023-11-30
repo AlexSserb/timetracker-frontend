@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ProjectModal from './project-modal.component';
-import moment from 'moment';
 import { Table } from "reactstrap";
 import ProjectService from "../../services/project.service";
 
@@ -10,9 +9,7 @@ class ProjectEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: {
-        name: ""
-      },
+      curProjectId: -1,
       projectsList: []
     };
 
@@ -33,22 +30,20 @@ class ProjectEditor extends Component {
     return this.state.projectsList.map((project) => (
       <tr> 
         <td>{project.name}</td>
-        { this.state.isFinished ? "" : (
-          <div>
-            <button
-              onClick={() => this.editItem(project)}
-              className="btn btn-secondary"
-            >
-              Edit
-            </button>
-            <button
-              onClick={() => this.handleDelete(project)}
-              className="btn btn-danger"
-            >
-              Delete
-            </button>
-          </div>
-        )}
+        <div>
+          <button
+            onClick={() => this.editItem(project)}
+            className="btn btn-secondary"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => this.handleDelete(project)}
+            className="btn btn-danger"
+          >
+            Delete
+          </button>
+        </div>
       </tr>
     ));
   };
@@ -61,8 +56,7 @@ class ProjectEditor extends Component {
   // Submit an item
   handleSubmit = (item) => {
     this.toggle();
-    alert("save" + JSON.stringify(item));
-    if (item.id) {
+    if (item.project.id) {
       // if old post to edit and submit
       ProjectService.putProject(item)
         .then(() => this.refreshList())
@@ -77,28 +71,20 @@ class ProjectEditor extends Component {
  
   // Delete item
   handleDelete = (item) => {
-    alert("delete" + JSON.stringify(item));
     ProjectService.deleteProject(item)
-      .then((res) => this.refreshList())
+      .then(() => this.refreshList())
       .catch(err => console.log(err));
   };
   
   // Create item
   createItem = () => {
-    const item = { 
-      name: ""
-    };
-    this.setState({ activeItem: item, modal: !this.state.modal });
+    this.setState({ curProjectId: -1, modal: !this.state.modal });
   };
  
   //Edit item
   editItem = (item) => {
-    this.setState({ activeItem: item, modal: !this.state.modal });
+    this.setState({ curProjectId: item.id, modal: !this.state.modal });
   };
-
-  handleChangeDate = e => {
-    this.setState({day: moment(e.target.value).format(this.dayFormat)})
-  }
  
   render() {
     return (
@@ -127,7 +113,7 @@ class ProjectEditor extends Component {
         </div>
         {this.state.modal ? (
           <ProjectModal
-            activeItem={this.state.activeItem}
+            curProjectId={this.state.curProjectId}
             toggle={this.toggle}
             onSave={this.handleSubmit}
           />

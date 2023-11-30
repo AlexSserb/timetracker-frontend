@@ -28,7 +28,6 @@ function Login(props) {
 
     setMessage("");
 
-    alert(`email = ${inputField.email}, psw = ${inputField.password}`);
     AuthService.login(inputField.email, inputField.password)
       .then(response => {
 				if (response.data.token) {

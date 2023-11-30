@@ -86,7 +86,6 @@ class TimesheetEditor extends Component {
  
   // Submit an item
   handleSubmit = (item) => {
-    alert("save " + JSON.stringify(item));
     this.toggle();
     item.userId = this.state.userId;
     if (item.id) {

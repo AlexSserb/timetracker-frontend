@@ -5,7 +5,7 @@ import Select from "react-select";
 
 import userService from "../../services/user.service";
 import projectService from "../../services/project.service";
-import chartStatUser from "./chart-stat-user.component";
+import ChartStatUser from "./chart-stat-user.component";
 
 // Statistic of one user for several projects
 class StatisticsUser extends Component {
@@ -39,12 +39,11 @@ class StatisticsUser extends Component {
     for (let i = 0; i < this.state.selectedProjects.length; i++) {
       projectIDs.push(this.state.selectedProjects[i].value);
     }
-    alert(JSON.stringify({
-      "date": this.state.dateWeekStart,
-      "projectIDs": projectIDs,
-      "selectedUser":  this.state.selectedUser
-    }));
-    projectService.getStatOneUserByWeeks(this.state.date, projectIDs, this.state.selectedUser);
+    projectService.getStatOneUserByWeeks(this.state.dateWeekStart, projectIDs, this.state.selectedUser)
+      .then(res => {
+        alert(`res = ${JSON.stringify(res)}`);
+      })
+      .catch(err => console.log(err));
   };
   
   handleChangeDate = e => {
@@ -102,7 +101,7 @@ class StatisticsUser extends Component {
 							<Label for="curProject">Проекты</Label>
 							<Select 
 								onChange={this.onChangeProject}
-								value={this.selectedProjects}
+								value={this.state.selectedProjects}
 								options={this.state.allProjectsList}
 								isSearchable={true}
 								isMulti
@@ -121,7 +120,7 @@ class StatisticsUser extends Component {
           </Form>
           <div className="col-md-6 mx-auto p-0">
             <div className="card p-2">
-							<chartStatUser/>
+							<ChartStatUser/>
             </div>
           </div>
         </div>

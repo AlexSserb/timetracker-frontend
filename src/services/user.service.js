@@ -1,11 +1,11 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const API_URL = "http://127.0.0.1:8080/dictionary/user";
+const API_URL = "dictionary/user";
 
 class UserService {
   getAllUsers() {
-    return axios.get(API_URL);
+    return axios.get(API_URL, { headers: authHeader() });
   }
 
 //   putProject(project) {

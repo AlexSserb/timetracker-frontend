@@ -5,8 +5,15 @@ const API_URL = "dictionary/project";
 
 class ProjectService {
   getAllProjects() {
-    alert(JSON.stringify(authHeader()));
     return axios.get(API_URL, { headers: authHeader() });
+  }
+
+  getProject(projectId) {
+    return axios.get(API_URL + `/${projectId}`, { headers: authHeader() })
+  }
+
+  getUsersForProject(projectId) {
+    return axios.get(API_URL + `/${projectId}/usersList`, { headers: authHeader() });
   }
 
   getStatOneUserByWeeks(monthDate, projectIDs, employeeID) {
@@ -22,7 +29,7 @@ class ProjectService {
   }
 
   postProject(project) {
-    return axios.post(API_URL + `/${project.name}`, { headers: authHeader() });
+    return axios.post(API_URL, project, { headers: authHeader() });
   }
 
   deleteProject(project) {
