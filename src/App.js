@@ -15,9 +15,7 @@ function App() {
     <div className="App">
       <Appbar/>
       <Routes>
-        <Route exact path="/" element={
-          <TimesheetEditor day={moment()} userId={"58162a1e-b7a4-4a15-8852-5aee1e4b4833"}/>
-        }/>
+        <Route exact path="/" element={ <TimesheetEditor day={moment()} /> }/>
         <Route path="/projectEdit" element={<ProjectEditor/>} />
         <Route path="/statisticsAllUsers" element={<StatisticsAllUsers/>} />
         <Route path="/login" element={<Login/>} />

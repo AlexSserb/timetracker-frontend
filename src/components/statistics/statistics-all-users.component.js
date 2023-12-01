@@ -29,23 +29,31 @@ class StatisticsAllUsers extends Component {
         key={ userData.user.id }
         className="list-group-item d-flex justify-content-between"
       >
-        <span className="mt-2">{ userData.user.name }</span>
-				<span className="mt-2">{ userData.user.job.name }</span>
-        <div className="card">
-          <ul className="list-group list-group-flush">
-				    {
-			  		  userData.projectTimeList.map((project) => (
-						    <li
-						  		key={ project.projectName }
-						  	  className="list-group-item d-flex justify-content-between align-items-center"
-						  	  >
-					  			<span className="mx-4">{ project.projectName }</span>
-								  <span className="mx-4">{ project.time } ч.</span>
-	  					  </li>
-		  			  ))
-					  }
-		  	  </ul>
+        <div>
+          <span className="mt-2">{ userData.user.name }</span><br></br>
+				  <span className="mt-2">{ userData.user.job.name }</span>
         </div>
+        {
+          userData.projectTimeList &&  userData.projectTimeList.length > 0 ?
+          (
+            <div className="card">
+            <ul className="list-group list-group-flush">
+              {
+                userData.projectTimeList.map((project) => (
+                  <li
+                    key={ project.projectName }
+                    className="list-group-item d-flex justify-content-between align-items-center"
+                    >
+                    <span className="mx-4">{ project.projectName }</span>
+                    <span className="mx-4">{ project.time } ч.</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          )
+          : <div>Нет привязанных проектов</div>
+        }
       </li>
     ));
   };

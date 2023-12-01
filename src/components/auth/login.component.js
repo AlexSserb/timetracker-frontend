@@ -31,6 +31,7 @@ function Login(props) {
     AuthService.login(inputField.email, inputField.password)
       .then(response => {
 				if (response.data.token) {
+          alert(JSON.stringify(response.data));
 					localStorage.setItem("user", JSON.stringify(response.data));
           navigate("/");
 				}

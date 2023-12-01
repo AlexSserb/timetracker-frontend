@@ -21,7 +21,6 @@ class TimesheetEditor extends Component {
         date: ""
       },
       isFinished: false,
-      userId: props.userId,
       day: props.day.format(this.dayFormat),
       projectsList: [],
       allProjectsList: [],
@@ -87,7 +86,6 @@ class TimesheetEditor extends Component {
   // Submit an item
   handleSubmit = (item) => {
     this.toggle();
-    item.userId = this.state.userId;
     if (item.id) {
       // if old post to edit and submit
       TimesheetService.putTimesheet(item)
@@ -111,11 +109,9 @@ class TimesheetEditor extends Component {
   // Create item
   createItem = () => {
     const item = { 
-      projectId: "", userId: this.state.userId, 
-      workTime: "", description: "", 
+      projectId: "", workTime: "", description: "", 
       date: this.state.day, finished: false
     };
-    item.workTime = 4;
     this.setState({ activeItem: item, modal: !this.state.modal });
   };
  
