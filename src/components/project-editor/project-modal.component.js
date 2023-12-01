@@ -21,6 +21,7 @@ class ProjectModal extends Component {
     super(props);
     this.state = {
       curProjectId: this.props.curProjectId,
+      isCreating: this.props.isCreating,
       allUsers: [],
       allSelectorUsers: [],
       selectedUsers: [],
@@ -58,12 +59,15 @@ class ProjectModal extends Component {
 	setUsersList = () => {
     userService.getAllUsers()
       .then(res => {
+        // Delete current user for creating new project
+        if (this.state.curProjectId === -1 && localStorage.getItem("user")) { 
+          let userObj = JSON.parse(localStorage.getItem("user"));
+          res.data = res.data.filter(user => user.id !== userObj.user);
+        }
+
         let users = this.getSelectViewFromData(res.data);
         this.setState({ allUsers: res.data });
         this.state.allSelectorUsers = users;
-        if (users.length > 0) {
-          this.setState({ selectedUser: users[0].value });
-        }
       })
       .catch(err => console.log(err));
   };

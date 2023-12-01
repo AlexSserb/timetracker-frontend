@@ -9,18 +9,30 @@ import ProjectEditor from './components/project-editor/project-editor.component'
 import StatisticsAllUsers from './components/statistics/statistics-all-users.component';
 import Login from './components/auth/login.component'
 import StatisticsUser from './components/statistics/statistics-user.component';
+import authService from './services/auth.service';
+import Logout from './components/auth/logout.component';
 
 function App() {
   return (
     <div className="App">
       <Appbar/>
-      <Routes>
-        <Route exact path="/" element={ <TimesheetEditor day={moment()} /> }/>
-        <Route path="/projectEdit" element={<ProjectEditor/>} />
-        <Route path="/statisticsAllUsers" element={<StatisticsAllUsers/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/statisticsUserByWeeks" element={<StatisticsUser/>} />
-      </Routes>
+        {
+          authService.getCurrentUser() ? (
+            <Routes>
+              <Route exact path="/" element={ <TimesheetEditor day={moment()} /> }/>
+              <Route path="/projectEdit" element={<ProjectEditor/>} />
+              <Route path="/statisticsAllUsers" element={<StatisticsAllUsers/>} />
+              <Route path="/login" element={<Login/>} />
+              <Route path="/statisticsUserByWeeks" element={<StatisticsUser/>} />
+              <Route path="/logout" element={<Logout/>} />
+            </Routes>
+          ) : (
+            <Routes>
+              <Route exact path="/" element={ <Login /> }/>
+            </Routes>
+          )
+        }
+      
     </div>
   );
 }
