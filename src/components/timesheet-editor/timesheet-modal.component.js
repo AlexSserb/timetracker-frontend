@@ -77,7 +77,7 @@ class DayModal extends Component {
               <Label for="description">Комментарий</Label>
               <Input
                 required
-                type="text"
+                type="textarea"
                 name="description"
                 value={this.state.activeItem.description}
                 onChange={this.handleChange}
