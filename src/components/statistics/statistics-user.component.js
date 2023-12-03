@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import moment from 'moment';
-import { Form, FormGroup, Label, Button } from "reactstrap";
+import { Form, FormGroup, Label, Button, Table } from "reactstrap";
 import Select from "react-select";
 
 import userService from "../../services/user.service";
 import projectService from "../../services/project.service";
-import ChartStatUser from "./chart-stat-user.component";
+import { Bar } from "react-chartjs-2"; 
+import {CategoryScale} from 'chart.js'; 
+import Chart from "chart.js/auto";
+Chart.register(CategoryScale);
 
 // Statistic of one user for several projects
 class StatisticsUser extends Component {
@@ -22,7 +25,9 @@ class StatisticsUser extends Component {
       selectedProjects: [],
       allProjectsList: [],
 			selectedUser: 0,
-			allUsersList: []
+			allUsersList: [],
+      data: [],
+      chartData: { labels: [], datasets: [] }
     };
 
     this.setProjectList();
@@ -39,12 +44,83 @@ class StatisticsUser extends Component {
     for (let i = 0; i < this.state.selectedProjects.length; i++) {
       projectIDs.push(this.state.selectedProjects[i].value);
     }
+
     projectService.getStatOneUserByWeeks(this.state.dateWeekStart, projectIDs, this.state.selectedUser)
       .then(res => {
-        alert(`res = ${JSON.stringify(res)}`);
+        this.state.data = res.data.workWeeks;
+        this.calcChartData();
+        // window.location.reload();
+        alert(JSON.stringify(this.state.chartData));
       })
       .catch(err => console.log(err));
   };
+
+  calcChartData = () => {
+    let amountDatasets = this.state.data.length / 13;
+    alert(amountDatasets);
+
+		let chartLabels = [];
+		for (let i = 0; i < this.state.data.length; i += amountDatasets) {
+			chartLabels.push(this.state.data[i].weekDate.substring(0, 10));
+		}
+
+		let chartDatasets = [];
+		for (let numDS = 0; numDS < amountDatasets; numDS++) {
+			let chartData = [];
+			for (let i = numDS; i < this.state.data.length; i += amountDatasets) {
+				chartData.push(this.state.data[i].workTime);
+			}
+
+			chartDatasets.push({
+				data: chartData,
+				label: this.state.data[numDS].projectName
+			})
+		}
+
+    this.setState({ chartData: {
+      labels: chartLabels,
+      datasets: chartDatasets
+    }});
+  }
+
+  renderDataTable = () => {
+    if (this.state.chartData.labels && this.state.chartData.labels.length > 0) {
+      return (
+        <Table bordered> 
+          <thead> 
+            <tr>
+              <th>Проект</th>
+              {
+                this.state.chartData.labels.map((label) => (
+                  <th>{label}</th>
+                ))
+              }
+            </tr> 
+           </thead> 
+          <tbody> 
+            {this.renderItems()}
+          </tbody> 
+        </Table>
+      );
+    }
+    return (<div></div>)
+  }
+
+  renderItems = () => {
+    return this.state.chartData.datasets.map((dataset) => (
+      <tr> 
+        <td>{dataset.label}</td>
+        {
+          dataset.data.map((data) => {
+            if (data === null || data === undefined) {
+              return (<td>0</td>)
+            }
+            return (<td>{data}</td>);
+          })
+        }
+      </tr>
+    ));
+  }
   
   handleChangeDate = e => {
     this.setState({[e.target.name]: moment(e.target.value).format(this.dayFormat)})
@@ -94,7 +170,7 @@ class StatisticsUser extends Component {
           Статистика пользователя
         </h3>
         <div className="row">
-          <Form className="col-md-3 col-sm-10 mx-auto p-0">
+          <Form className="col-md-3 col-sm-10 mx-5 p-0">
 						<Button className="mx-2">На 4 недели назад</Button>
 						<Button>На 4 недели вперед</Button>
 						<FormGroup>
@@ -118,11 +194,14 @@ class StatisticsUser extends Component {
             	Показать статистику о сотрудникe
           	</Button>
           </Form>
-          <div className="col-md-6 mx-auto p-0">
+          <div className="col-md-7 mx-5 p-0">
             <div className="card p-2">
-							<ChartStatUser/>
+							<Bar data={this.state.chartData}/>
             </div>
           </div>
+        </div>
+        <div className="row m-5" >
+          {this.renderDataTable()}
         </div>
       </div>
     );

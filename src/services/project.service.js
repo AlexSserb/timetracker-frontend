@@ -17,17 +17,12 @@ class ProjectService {
   }
 
   getStatOneUserByWeeks(monthDate, projectIDs, employeeID) {
-    alert(JSON.stringify({
-      "monthDate": monthDate,
-      "projectIDs": projectIDs,
-      "employeeID": employeeID
-    }))
-
     let data = {
       "monthDate": monthDate,
       "projectIDs": projectIDs,
       "employeeID": employeeID
     };
+    alert(JSON.stringify(data));
 
     return axios.post(API_URL + "/employee", data, { headers: authHeader() });
   }
