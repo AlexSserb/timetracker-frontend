@@ -22,7 +22,7 @@ class StatisticsAllUsers extends Component {
 
     this.setProjectList();
   }
- 
+
   renderUsersWithProjectList = () => {
     return this.state.usersList.map((userData) => (
       <li

@@ -17,11 +17,10 @@ class StatisticsUser extends Component {
   constructor(props) {
     super(props);
     let date = moment();
-    date.set("date", 1);
-    date.add(-3, "month");
+    date.add(-84, "day");
 
     this.state = {
-      dateWeekStart: date,
+      dateStatStart: date,
       selectedProjects: [],
       allProjectsList: [],
 			selectedUser: 0,
@@ -38,26 +37,42 @@ class StatisticsUser extends Component {
     this.setState({ modal: !this.state.modal });
   };
 
+  goBackFourWeeks = () => {
+    this.addDaysToStartStatDate(-28);
+  }
+
+  goForwardFourWeeks = () => {
+    this.addDaysToStartStatDate(28);
+  }
+
+  addDaysToStartStatDate = (days) => {
+    let date = this.state.dateStatStart;
+    date.add(days, "day");
+    this.setState({ dateStatStart: date });
+    this.setStatData();
+  }
+
   // Submit an item
   handleSubmit = () => {
+    this.setStatData();
+  };
+
+  setStatData = () => {
     let projectIDs = [];
     for (let i = 0; i < this.state.selectedProjects.length; i++) {
       projectIDs.push(this.state.selectedProjects[i].value);
     }
 
-    projectService.getStatOneUserByWeeks(this.state.dateWeekStart, projectIDs, this.state.selectedUser)
+    projectService.getStatOneUserByWeeks(this.state.dateStatStart, projectIDs, this.state.selectedUser)
       .then(res => {
         this.state.data = res.data.workWeeks;
         this.calcChartData();
-        // window.location.reload();
-        alert(JSON.stringify(this.state.chartData));
       })
       .catch(err => console.log(err));
-  };
+  }
 
   calcChartData = () => {
-    let amountDatasets = this.state.data.length / 13;
-    alert(amountDatasets);
+    let amountDatasets = this.state.data.length / 12;
 
 		let chartLabels = [];
 		for (let i = 0; i < this.state.data.length; i += amountDatasets) {
@@ -171,8 +186,6 @@ class StatisticsUser extends Component {
         </h3>
         <div className="row">
           <Form className="col-md-3 col-sm-10 mx-5 p-0">
-						<Button className="mx-2">На 4 недели назад</Button>
-						<Button>На 4 недели вперед</Button>
 						<FormGroup>
 							<Label for="curProject">Проекты</Label>
 							<Select 
@@ -193,6 +206,8 @@ class StatisticsUser extends Component {
 						<Button color="success" onClick={this.handleSubmit}>
             	Показать статистику о сотрудникe
           	</Button>
+            <Button className="m-2" onClick={this.goBackFourWeeks}>На 4 недели назад</Button>
+						<Button onClick={this.goForwardFourWeeks}>На 4 недели вперед</Button>
           </Form>
           <div className="col-md-7 mx-5 p-0">
             <div className="card p-2">
