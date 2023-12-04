@@ -131,8 +131,8 @@ class TimesheetEditor extends Component {
     }
 
     TimesheetService.putTimesheetsFinished(timesheetIDs)
-      .catch(err => console.log(err));;
-    this.refreshList();
+      .then((res) => this.refreshList())
+      .catch(err => console.log(err));
   };
 
   handleChangeDate = e => {

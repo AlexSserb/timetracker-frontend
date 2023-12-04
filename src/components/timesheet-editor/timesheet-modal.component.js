@@ -22,7 +22,6 @@ class DayModal extends Component {
       allProjectsList: this.props.allProjectsList,
       activeItem: this.props.activeItem
     };
-    alert(JSON.stringify(this.state.activeItem.projectId));
   }
 
   handleChange = e => {
