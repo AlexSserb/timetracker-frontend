@@ -10,8 +10,7 @@ function Logout() {
   useEffect(() => {
     navigate("/login");
     authService.logout();
-    //window.location.reload();
-  }, []);
+  }, [navigate]);
   
   return (
     <div></div>

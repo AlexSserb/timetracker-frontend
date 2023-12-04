@@ -112,7 +112,7 @@ class ProjectModal extends Component {
  
   // rendering modal in the custommodal class received toggle and on save as props,
   render() {
-    const { toggle, onSave } = this.props;
+    const { toggle  } = this.props;
     return (
       <Modal isOpen={true} toggle={toggle}>
         <ModalHeader toggle={toggle}> Проект </ModalHeader>

@@ -26,4 +26,5 @@ class TimesheetService {
   }
 }
 
-export default new TimesheetService();
+const timesheetSevice = new TimesheetService();
+export default timesheetSevice;

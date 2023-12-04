@@ -22,7 +22,6 @@ class ProjectService {
       "projectIDs": projectIDs,
       "employeeID": employeeID
     };
-    alert(JSON.stringify(data));
 
     return axios.post(API_URL + "/employee", data, { headers: authHeader() });
   }
@@ -40,4 +39,5 @@ class ProjectService {
   }
 }
 
-export default new ProjectService();
+const projectService = new ProjectService();
+export default projectService;

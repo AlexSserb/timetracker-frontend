@@ -57,6 +57,7 @@ class DayModal extends Component {
                 min={0.5} max={24}
                 name="workTime"
                 value={this.state.activeItem.worktime}
+                defaultValue={this.state.activeItem.worktime}
                 onChange={this.handleChange}
                 placeholder="Введите количество часов, потраченное на проект"
               />
@@ -68,6 +69,7 @@ class DayModal extends Component {
                 required
                 onChange={this.onChange}
                 value={this.getValue()}
+                defaultValue={this.getValue()}
                 options={this.state.allProjectsList} 
                 placeholder="Выберите проект"
               />
