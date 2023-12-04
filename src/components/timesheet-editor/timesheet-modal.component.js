@@ -22,6 +22,7 @@ class DayModal extends Component {
       allProjectsList: this.props.allProjectsList,
       activeItem: this.props.activeItem
     };
+    alert(JSON.stringify(this.state.activeItem.projectId));
   }
 
   handleChange = e => {
@@ -50,14 +51,13 @@ class DayModal extends Component {
          
           <Form>
             <FormGroup>
-              <Label for="workTime">Время, потраченное на проект</Label>
+              <Label for="workTime">Количество часов, потраченное на проект</Label>
               <Input
                 type="number"
                 step="0.5"
                 min={0.5} max={24}
                 name="workTime"
-                value={this.state.activeItem.worktime}
-                defaultValue={this.state.activeItem.worktime}
+                value={this.state.activeItem.workTime}
                 onChange={this.handleChange}
                 placeholder="Введите количество часов, потраченное на проект"
               />
@@ -69,7 +69,6 @@ class DayModal extends Component {
                 required
                 onChange={this.onChange}
                 value={this.getValue()}
-                defaultValue={this.getValue()}
                 options={this.state.allProjectsList} 
                 placeholder="Выберите проект"
               />

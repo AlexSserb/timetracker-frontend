@@ -117,6 +117,7 @@ class TimesheetEditor extends Component {
  
   //Edit item
   editItem = (item) => {
+    item.projectId = item.project.id;
     this.setState({ activeItem: item, modal: !this.state.modal });
   };
 
