@@ -11,27 +11,29 @@ import Login from './components/auth/login.component'
 import StatisticsUser from './components/statistics/statistics-user.component';
 import Logout from './components/auth/logout.component';
 import authService from './services/auth.service';
+import JobEditor from './components/job-editor/job-editor.component';
 
 function App() {
   return (
     <div className="App">
       <Appbar/>
         {
-            authService.getCurrentUser() ? (
-              <Routes>
-                <Route exact path="/" element={ <TimesheetEditor day={moment()} /> }/>
-                <Route path="/projectEdit" element={<ProjectEditor/>} />
-                <Route path="/statisticsAllUsers" element={<StatisticsAllUsers/>} />
-                <Route path="/login" element={<Login/>} />
-                <Route path="/statisticsUserByWeeks" element={<StatisticsUser/>} />
-                <Route path="/logout" element={<Logout/>} />
-              </Routes>
-            ) : (
-              <Routes>
-                <Route exact path="/" element={ <Login /> }/>
-                <Route path="/logout" element={<Logout/>} />
-              </Routes>
-            )
+          authService.getCurrentUser() ? (
+            <Routes>
+              <Route exact path="/" element={ <TimesheetEditor day={moment()} /> }/>
+              <Route path="/projectEdit" element={<ProjectEditor/>} />
+              <Route path="/jobEdit" element={<JobEditor/>} />
+              <Route path="/statisticsAllUsers" element={<StatisticsAllUsers/>} />
+              <Route path="/login" element={<Login/>} />
+              <Route path="/statisticsUserByWeeks" element={<StatisticsUser/>} />
+              <Route path="/logout" element={<Logout/>} />
+            </Routes>
+          ) : (
+            <Routes>
+              <Route exact path="/" element={ <Login /> }/>
+              <Route path="/logout" element={<Logout/>} />
+            </Routes>
+          )
         }
       
     </div>

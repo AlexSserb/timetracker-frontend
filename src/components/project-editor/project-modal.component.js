@@ -25,7 +25,7 @@ class ProjectModal extends Component {
       allUsers: [],
       allSelectorUsers: [],
       selectedUsers: [],
-      activeItem: { project: { name: "", id: "" }, userList: [] },
+      activeItem: { project: { name: "", id: "", active: true }, userList: [] },
       onSaveFunc: this.props.onSave
     };
 
@@ -36,13 +36,13 @@ class ProjectModal extends Component {
   setActiveItem = () => {
     if (this.state.curProjectId === -1) {
       this.setState({ activeItem: { 
-        project: { name: "", id: "" }, userList: []
+        project: { name: "", id: "", active: true }, userList: []
       }});
     }
     else {
       projectService.getProject(this.state.curProjectId)
         .then(res => {
-          this.setState({ activeItem: { project: { name: res.data.name, id: res.data.id }, userList: [] }});
+          this.setState({ activeItem: { project: { name: res.data.name, id: res.data.id, active: true }, userList: [] }});
         })
       
       projectService.getUsersForProject(this.state.curProjectId)
@@ -80,7 +80,8 @@ class ProjectModal extends Component {
     this.setState({ activeItem: {
       project: {
         name: e.target.value,
-        id: this.state.activeItem.project.id
+        id: this.state.activeItem.project.id,
+        active: true
       },
       userList: this.state.userList
     }});

@@ -4,8 +4,8 @@ import authHeader from "./auth-header";
 const API_URL = "dictionary/project";
 
 class ProjectService {
-  getAllProjects() {
-    return axios.get(API_URL, { headers: authHeader() });
+  getAllActiveProjects() {
+    return axios.get(API_URL + "/all/true", { headers: authHeader() });
   }
 
   getProject(projectId) {

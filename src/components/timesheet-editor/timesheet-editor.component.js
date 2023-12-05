@@ -141,7 +141,7 @@ class TimesheetEditor extends Component {
 
   // Set list of all projects
   setProjectList = () => {
-    projectService.getAllProjects()
+    projectService.getAllActiveProjects()
       .then(res => {
         let projects = res.data.map(proj => { return { value: proj.id, label: proj.name }});
         
