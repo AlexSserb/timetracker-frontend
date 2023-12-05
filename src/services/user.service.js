@@ -8,17 +8,25 @@ class UserService {
     return axios.get(API_URL, { headers: authHeader() });
   }
 
-//   putProject(project) {
-//     return axios.put(API_URL, project);
-//   }
+  /* Returns objects of userAuth */
+  getAllUsersAuth() {
+    return axios.get("userAuth", { headers: authHeader() });
+  }
 
-//   postProject(project) {
-//     return axios.post(API_URL + `/${project.name}`);
-//   }
+  /* Post object of userAuth */
+  postUserAuth(userAuth) {
+    return axios.post("register", userAuth, { headers: authHeader() });
+  }
 
-//   deleteProject(project) {
-//     return axios.delete(API_URL + `/${project.id}`);
-//   }
+  /* Put object of userAuth */
+  putUserAuth(userAuth) {
+    return axios.put("userAuth", userAuth, { header: authHeader() });
+  }
+
+  /* Delete User object by User.ID */
+  deleteUser(user) {
+    return axios.delete(API_URL + `/${user.id}`, { headers: authHeader() });
+  }
 }
 
 const userService = new UserService();

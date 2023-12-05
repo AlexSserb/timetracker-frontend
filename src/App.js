@@ -12,6 +12,7 @@ import StatisticsUser from './components/statistics/statistics-user.component';
 import Logout from './components/auth/logout.component';
 import authService from './services/auth.service';
 import JobEditor from './components/job-editor/job-editor.component';
+import UserEditor from './components/user-editor/user-editor.component';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Route exact path="/" element={ <TimesheetEditor day={moment()} /> }/>
               <Route path="/projectEdit" element={<ProjectEditor/>} />
               <Route path="/jobEdit" element={<JobEditor/>} />
+              <Route path="/userEdit" element={<UserEditor/>} />
               <Route path="/statisticsAllUsers" element={<StatisticsAllUsers/>} />
               <Route path="/login" element={<Login/>} />
               <Route path="/statisticsUserByWeeks" element={<StatisticsUser/>} />

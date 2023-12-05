@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import JobModal from './job-modal.component';
 import { Table } from "reactstrap";
+import EditIcon from '@mui/icons-material/Edit';
+import Button from '@mui/material/Button';
+
 import jobService from "../../services/job.service";
 
 // List of job editor
@@ -30,14 +33,11 @@ class JobEditor extends Component {
     return this.state.jobsList.map((job) => (
       <tr> 
         <td>{job.name}</td>
-        <div>
-          <button
-            onClick={() => this.editItem(job)}
-            className="btn btn-secondary"
-          >
-            Edit
-          </button>
-        </div>
+        <td>
+          <Button onClick={() => this.editItem(job)}>
+            <EditIcon/>
+          </Button>
+        </td>
       </tr>
     ));
   };
@@ -93,10 +93,11 @@ class JobEditor extends Component {
               Добавить должность
             </button>
           </div>
-          <Table> 
+          <Table striped> 
             <thead> 
               <tr>
                 <th>Название должности</th>
+                <th></th>
               </tr> 
             </thead> 
             <tbody> 

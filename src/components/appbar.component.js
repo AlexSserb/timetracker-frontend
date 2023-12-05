@@ -44,6 +44,9 @@ const Appbar = () => {
               <ListItem component={Link} to="/jobEdit">
                 <ListItemText primary="Редактирование должностей" />
               </ListItem>
+              <ListItem component={Link} to="/userEdit">
+                <ListItemText primary="Редактирование пользователей" />
+              </ListItem>
               <ListItem component={Link} to="/statisticsAllUsers">
                 <ListItemText primary="Статистика всех пользователей" />
               </ListItem>

@@ -3,6 +3,10 @@ import DayModal from "./timesheet-modal.component";
 import TimesheetService from "../../services/timesheet.service";
 import { Input, Form, Table } from "reactstrap";
 import moment from "moment";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import Button from '@mui/material/Button';
+
 import projectService from "../../services/project.service";
 
 
@@ -59,20 +63,14 @@ class TimesheetEditor extends Component {
         <td>{project.project.name}</td> 
         <td>{project.description}</td>
         { this.state.isFinished ? "" : (
-          <div>
-            <button
-              onClick={() => this.editItem(project)}
-              className="btn btn-secondary"
-            >
-              Edit
-            </button>
-            <button
-              onClick={() => this.handleDelete(project)}
-              className="btn btn-danger"
-            >
-              Delete
-            </button>
-          </div>
+          <td>
+            <Button onClick={() => this.editItem(project)}>
+              <EditIcon/>
+            </Button>
+            <Button onClick={() => this.handleDelete(project)} >
+              <DeleteIcon/>
+            </Button>
+          </td>
         )}
       </tr>
     ));
@@ -186,12 +184,13 @@ class TimesheetEditor extends Component {
           )}
           { 
             this.state.projectsList.length > 0 ? 
-            <Table className="mt-4"> 
+            <Table className="mt-4" striped> 
               <thead> 
                 <tr> 
                   <th>Время</th> 
                   <th>Проект</th>
                   <th>Комментарий</th> 
+                  <th></th>
                 </tr> 
               </thead> 
               <tbody> 

@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import ProjectModal from './project-modal.component';
 import { Table } from "reactstrap";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import Button from '@mui/material/Button';
+
 import ProjectService from "../../services/project.service";
 
 // List of projects editor
@@ -30,20 +34,14 @@ class ProjectEditor extends Component {
     return this.state.projectsList.map((project) => (
       <tr> 
         <td>{project.name}</td>
-        <div>
-          <button
-            onClick={() => this.editItem(project)}
-            className="btn btn-secondary"
-          >
-            Edit
-          </button>
-          <button
-            onClick={() => this.handleDelete(project)}
-            className="btn btn-danger"
-          >
-            Delete
-          </button>
-        </div>
+        <td>
+          <Button onClick={() => this.editItem(project)}>
+            <EditIcon/>
+          </Button>
+          <Button onClick={() => this.handleDelete(project)}>
+            <DeleteIcon/>
+          </Button>
+        </td>
       </tr>
     ));
   };
@@ -98,10 +96,11 @@ class ProjectEditor extends Component {
               Добавить проект
             </button>
           </div>
-          <Table> 
+          <Table striped> 
             <thead> 
               <tr>
                 <th>Проект</th>
+                <th></th>
               </tr> 
             </thead> 
             <tbody> 
