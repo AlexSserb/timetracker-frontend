@@ -20,16 +20,22 @@ function App() {
       <Appbar/>
         {
           authService.getCurrentUser() ? (
-            <Routes>
-              <Route exact path="/" element={ <TimesheetEditor day={moment()} /> }/>
-              <Route path="/projectEdit" element={<ProjectEditor/>} />
-              <Route path="/jobEdit" element={<JobEditor/>} />
-              <Route path="/userEdit" element={<UserEditor/>} />
-              <Route path="/statisticsAllUsers" element={<StatisticsAllUsers/>} />
-              <Route path="/login" element={<Login/>} />
-              <Route path="/statisticsUserByWeeks" element={<StatisticsUser/>} />
-              <Route path="/logout" element={<Logout/>} />
-            </Routes>
+            authService.isManagerCurrUser() ? (
+              <Routes>
+                <Route exact path="/" element={ <TimesheetEditor day={moment()} /> }/>
+                <Route path="/projectEdit" element={<ProjectEditor/>} />
+                <Route path="/jobEdit" element={<JobEditor/>} />
+                <Route path="/userEdit" element={<UserEditor/>} />
+                <Route path="/statisticsAllUsers" element={<StatisticsAllUsers/>} />
+                <Route path="/statisticsUserByWeeks" element={<StatisticsUser/>} />
+                <Route path="/logout" element={<Logout/>} />
+              </Routes>
+            ) : (
+              <Routes>
+                <Route exact path="/" element={ <TimesheetEditor day={moment()} /> }/>
+                <Route path="/logout" element={<Logout/>} />
+              </Routes>
+            )
           ) : (
             <Routes>
               <Route exact path="/" element={ <Login /> }/>

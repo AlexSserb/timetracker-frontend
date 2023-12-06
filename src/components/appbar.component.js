@@ -1,12 +1,27 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, Typography, ListItemButton } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 import authService from '../services/auth.service';
 
 // Main application bar with humburger menu
 const Appbar = () => {
   const [open, setOpen] = useState(false);
+
+  const itemsForManager = [
+    { to: "/", label: "Редактирование рабочего дня" },
+    { to: "/projectEdit", label: "Редактирование проектов" },
+    { to: "/jobEdit", label: "Редактирование должностей" },
+    { to: "/userEdit", label: "Редактирование пользователей" },
+    { to: "/statisticsAllUsers", label: "Статистика всех пользователей" },
+    { to: "/statisticsUserByWeeks", label: "Статистика пользователя" },
+    { to: "/logout", label: "Выйти" }
+  ]
+
+  const itemsForOrdinalUser = [
+    { to: "/", label: "Редактирование рабочего дня" },
+    { to: "/logout", label: "Выйти" }
+  ]
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -15,6 +30,14 @@ const Appbar = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const listItem = item => {
+    return (
+      <ListItem className="p-0 border-top" component={Link} to={item.to}>
+        <ListItemButton className='p-3'>{item.label}</ListItemButton>
+      </ListItem>
+    )
+  }
 
   return (
     <div>
@@ -34,28 +57,13 @@ const Appbar = () => {
       </AppBar>
         { authService.getCurrentUser() ? (
           <Drawer open={open} onClose={handleDrawerClose}>
-            <List>
-              <ListItem component={Link} to="/">
-                <ListItemText primary="Редактирование рабочего дня" />
-              </ListItem>
-              <ListItem component={Link} to="/projectEdit">
-                <ListItemText primary="Редактирование проектов" />
-              </ListItem>
-              <ListItem component={Link} to="/jobEdit">
-                <ListItemText primary="Редактирование должностей" />
-              </ListItem>
-              <ListItem component={Link} to="/userEdit">
-                <ListItemText primary="Редактирование пользователей" />
-              </ListItem>
-              <ListItem component={Link} to="/statisticsAllUsers">
-                <ListItemText primary="Статистика всех пользователей" />
-              </ListItem>
-              <ListItem component={Link} to="/statisticsUserByWeeks">
-                <ListItemText primary="Статистика пользователя" />
-              </ListItem>
-              <ListItem component={Link} to="/logout">
-                <ListItemText primary="Выйти" />
-              </ListItem>
+            <h3 className='p-3'>Меню</h3>
+            <List className='p-0 m-0 border-bottom'>
+              { authService.isManagerCurrUser() ? (
+                itemsForManager.map(item => listItem(item))
+              ) : (
+                itemsForOrdinalUser.map(item => listItem(item))
+              ) }
             </List>
           </Drawer>
           ) : (<div></div>)

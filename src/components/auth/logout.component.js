@@ -8,8 +8,9 @@ function Logout() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate("/login");
     authService.logout();
+    navigate("/");
+    window.location.reload();
   }, [navigate]);
   
   return (

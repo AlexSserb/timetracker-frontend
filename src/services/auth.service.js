@@ -18,6 +18,11 @@ class AuthService {
 	getCurrentUser() {
 		return JSON.parse(localStorage.getItem("user"));
 	}
+
+	isManagerCurrUser() {
+		let user = JSON.parse(localStorage.getItem("user"));
+		return user && user.manager;
+	}
 }
 
 const authService = new AuthService();
