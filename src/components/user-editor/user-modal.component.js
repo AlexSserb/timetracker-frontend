@@ -6,7 +6,6 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   Form,
   FormGroup,
   Input,
@@ -39,7 +38,6 @@ class UserModal extends Component {
   handleChangeIsManager = event => {
     const item = this.state.activeItem;
     item.userAuth.managerRole = event.target.checked;
-    alert(JSON.stringify(item.userAuth.managerRole));
     this.setState({ activeItem: item });
   }
 
@@ -64,11 +62,11 @@ class UserModal extends Component {
       <Modal isOpen={true} toggle={toggle}>
         <ModalHeader toggle={toggle}> Пользователь </ModalHeader>
         <ModalBody>
-         
-          <Form>
+          <Form onSubmit={() => onSave(this.state.activeItem)}>
             <FormGroup>
               <Label for="login">Почта</Label>
               <Input
+                required
                 type="email"
                 name="login"
                 value={this.state.activeItem.userAuth.login}
@@ -80,6 +78,7 @@ class UserModal extends Component {
 						<FormGroup>
               <Label for="user.name">Имя</Label>
               <Input
+                required
                 type="text"
                 name="user.name"
                 value={this.state.activeItem.userAuth.user.name}
@@ -102,20 +101,19 @@ class UserModal extends Component {
             <FormGroup>
               <Label for="jobId">Должность</Label>
               <Select 
+                required
                 onChange={this.onChangeJob}
                 value={this.getValue()}
                 options={this.state.allJobsList} 
                 placeholder="Выберите должность"
               />
             </FormGroup>
+
+            <Button color="success">
+              Сохранить
+            </Button>
           </Form>
         </ModalBody>
-        
-        <ModalFooter>
-          <Button color="success" onClick={() => onSave(this.state.activeItem)}>
-            Save
-          </Button>
-        </ModalFooter>
       </Modal>
     );
   }

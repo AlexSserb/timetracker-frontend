@@ -6,7 +6,6 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   Form,
   FormGroup,
   Input,
@@ -48,10 +47,11 @@ class DayModal extends Component {
         <ModalHeader toggle={toggle}> Проект </ModalHeader>
         <ModalBody>
          
-          <Form>
+          <Form onSubmit={() => onSave(this.state.activeItem)}>
             <FormGroup>
               <Label for="workTime">Количество часов, потраченное на проект</Label>
               <Input
+                required
                 type="number"
                 step="0.5"
                 min={0.5} max={24}
@@ -76,7 +76,6 @@ class DayModal extends Component {
             <FormGroup>
               <Label for="description">Комментарий</Label>
               <Input
-                required
                 type="textarea"
                 name="description"
                 value={this.state.activeItem.description}
@@ -84,14 +83,12 @@ class DayModal extends Component {
                 placeholder="Введите комментарий"
               />
             </FormGroup>
+
+            <Button color="success">
+              Сохранить
+            </Button>
           </Form>
         </ModalBody>
-        
-        <ModalFooter>
-          <Button color="success" onClick={() => onSave(this.state.activeItem)}>
-            Save
-          </Button>
-        </ModalFooter>
       </Modal>
     );
   }

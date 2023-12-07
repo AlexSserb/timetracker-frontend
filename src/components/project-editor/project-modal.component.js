@@ -5,7 +5,6 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   Form,
   FormGroup,
   Input,
@@ -118,10 +117,11 @@ class ProjectModal extends Component {
       <Modal isOpen={true} toggle={toggle}>
         <ModalHeader toggle={toggle}> Проект </ModalHeader>
         <ModalBody>
-          <Form>
+          <Form onSubmit={this.onSubmit}>
             <FormGroup>
               <Label for="project.name">Название</Label>
               <Input
+                required 
                 type="text"
                 name="project.name"
                 value={this.state.activeItem.project.name}
@@ -132,21 +132,21 @@ class ProjectModal extends Component {
             <FormGroup>
               <Label for="userList">Работники</Label>
 							<Select 
+                required
 								onChange={this.onChangeUserList}
 								value={this.state.selectedUsers}
 								options={this.state.allSelectorUsers}
 								isSearchable={true}
+                placeholder="Выберите работников"
 								isMulti
 							/>
             </FormGroup>
+
+            <Button color="success">
+              Сохранить
+            </Button>
           </Form>
         </ModalBody>
-        
-        <ModalFooter>
-          <Button color="success" onClick={this.onSubmit}>
-            Save
-          </Button>
-        </ModalFooter>
       </Modal>
     );
   }

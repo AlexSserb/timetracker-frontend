@@ -5,7 +5,6 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   Form,
   FormGroup,
   Input,
@@ -35,10 +34,11 @@ class DayModal extends Component {
         <ModalHeader toggle={toggle}> Должность </ModalHeader>
         <ModalBody>
          
-          <Form>
+          <Form onSubmit={() => onSave(this.state.activeItem)}>
             <FormGroup>
               <Label for="name">Название должности</Label>
               <Input
+                required
                 type="text"
                 name="name"
                 value={this.state.activeItem.job.name}
@@ -46,14 +46,11 @@ class DayModal extends Component {
                 placeholder="Введите название должности"
               />
             </FormGroup>
+            <Button color="success">
+              Сохранить
+            </Button>
           </Form>
         </ModalBody>
-        
-        <ModalFooter>
-          <Button color="success" onClick={() => onSave(this.state.activeItem)}>
-            Save
-          </Button>
-        </ModalFooter>
       </Modal>
     );
   }

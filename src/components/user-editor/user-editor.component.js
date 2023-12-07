@@ -82,7 +82,6 @@ class UserEditor extends Component {
     this.toggle();
     if (item.userAuth.id) {
       // if old post to edit and submit
-      alert(JSON.stringify(item));
       userService.putUserAuth(item)
         .then(() => this.refreshList())
         .catch(err => console.log(err));
