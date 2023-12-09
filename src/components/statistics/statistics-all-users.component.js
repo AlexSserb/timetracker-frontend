@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import moment from 'moment';
-import { Input, Form, FormGroup, Label, Button } from "reactstrap";
+import { Input, Form, FormGroup, Label, Button, Table } from "reactstrap";
 import Select from "react-select";
 import projectService from "../../services/project.service";
 import statisticsService from "../../services/statistics.service";
@@ -25,50 +25,43 @@ class StatisticsAllUsers extends Component {
 
   renderUsersWithProjectList = () => {
     return this.state.usersList.map((userData) => (
-      <li
-        key={ userData.user.id }
-        className="list-group-item d-flex justify-content-between"
-      >
-        <div>
-          <span className="mt-2">{ userData.user.name }</span><br></br>
-				  <span className="mt-2">{ userData.user.job.name }</span>
-        </div>
-        {
-          userData.projectTimeList &&  userData.projectTimeList.length > 0 ?
-          (
-            <div className="card">
-            <ul className="list-group list-group-flush">
-              {
-                userData.projectTimeList.map((project) => (
-                  <li
-                    key={ project.projectName }
-                    className="list-group-item d-flex justify-content-between align-items-center"
-                    >
-                    <span className="mx-4">{ project.projectName }</span>
-                    <span className="mx-4">{ project.time } ч.</span>
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-          )
-          : <div>Нет привязанных проектов</div>
-        }
-      </li>
+      <tr> 
+        <td>{userData.user.name}</td>
+				<td>{userData.user.job.name}</td>
+        <td>
+          {
+            userData.projectTimeList &&  userData.projectTimeList.length > 0 ?
+            (
+              <div className="card">
+              <ul className="list-group list-group-flush">
+                {
+                  userData.projectTimeList.map((project) => (
+                    <li
+                      key={ project.projectName }
+                      className="list-group-item d-flex justify-content-between align-items-center"
+                      >
+                      <span className="mx-4">{ project.projectName }</span>
+                      <span className="mx-4">{ project.time } ч.</span>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+            )
+            : <div>Нет привязанных проектов</div>
+          }
+        </td>
+      </tr>
     ));
   };
 
   renderUsersWithOneProject = () => {
     return this.state.usersList.map((userData) => (
-      <li
-        key={ userData.user.id }
-        className="list-group-item d-flex justify-content-between"
-      >
-        <span className="mt-1">{ userData.user.name }</span>
-			  <span className="mt-1">{ userData.user.job.name }</span>
-        <span className="mt-1">{ userData.projectTimeList[0].projectName }</span>
-			  <span className="mt-1">{ userData.projectTimeList[0].time } ч.</span>
-      </li>
+      <tr> 
+        <td>{userData.user.name}</td>
+				<td>{userData.user.job.name}</td>
+				<td>{userData.projectTimeList[0].time}</td>
+      </tr>
     ));
   };
  
@@ -106,6 +99,31 @@ class StatisticsAllUsers extends Component {
 
   onChange = (newValue) => {
     this.setState({ curProject: newValue.value });
+  }
+
+  createTable = () => {
+    return (
+      <Table className="mt-4"> 
+        <thead> 
+          <tr> 
+            <th>Имя</th> 
+            <th>Должность</th>
+            {
+              this.state.curProject === 0 ?
+              <th>Проекты и отработанные часы</th>
+              : <th>Отработано часов</th>
+            }
+          </tr> 
+        </thead> 
+        <tbody> 
+          { 
+            this.state.curProject === 0 ? 
+            this.renderUsersWithProjectList()
+            : this.renderUsersWithOneProject()
+          }
+        </tbody> 
+      </Table> 
+    )
   }
  
   render() {
@@ -147,11 +165,7 @@ class StatisticsAllUsers extends Component {
               <ul className="list-group list-group-flush">
                 { 
                   this.state.usersList.length > 0 ? 
-                  ( 
-                    this.state.curProject === 0 ?
-                    this.renderUsersWithProjectList()
-                    : this.renderUsersWithOneProject()
-                  )
+                  this.createTable()
                   : <div>Нет таймшитов за данный период</div>
                 }
               </ul>

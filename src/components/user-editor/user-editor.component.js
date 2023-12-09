@@ -8,7 +8,14 @@ import EmailIcon from '@mui/icons-material/Email';
 import userService from "../../services/user.service";
 import UserModal from "./user-modal.component";
 import jobsService from "../../services/job.service";
+import { Alert } from "@mui/material";
 
+
+const alertTypes = Object.freeze({ 
+  NONE: 0, 
+  SUCCESS: 1, 
+  ERROR: 2
+}); 
 
 class UserEditor extends Component {
   constructor(props) {
@@ -30,7 +37,8 @@ class UserEditor extends Component {
 				}
       },
       usersList: [],
-      allJobsList: []
+      allJobsList: [],
+      alertResendResult: alertTypes.NONE
     };
 
     this.refreshList();
@@ -47,7 +55,7 @@ class UserEditor extends Component {
         this.setState({ usersList: res.data });
       })
       .catch(err => console.log(err));
-  };
+  }
  
   // Main variable to render items on the screen
   renderItems = () => {
@@ -58,23 +66,23 @@ class UserEditor extends Component {
         <td>{obj.userAuth.managerRole ? "Да" : "Нет"}</td> 
 				<td>{obj.userAuth.user.job.name}</td>
         <td>
-          <Button onClick={() => this.editItem(obj)}>
+          <Button className="px-0" onClick={() => this.editItem(obj)}>
             <EditIcon/>
           </Button>
-          <Button onClick={() => this.handleDelete(obj.userAuth)} >
+          <Button className="px-0" onClick={() => this.handleDelete(obj.userAuth)} >
             <DeleteIcon/>
           </Button>
-          <Button>
+          <Button className="px-0" onClick={() => this.resendPsw(obj)}>
             <EmailIcon/>
           </Button>
         </td>
       </tr>
     ));
-  };
+  }
  
   toggle = () => {
     this.setState({ modal: !this.state.modal });
-  };
+  }
  
  
   // Submit an item
@@ -91,16 +99,24 @@ class UserEditor extends Component {
     userService.postUserAuth(item)
       .then(() => this.refreshList())
       .catch(err => console.log(err));
-  };
+  }
+
+  setAlertResendResultNone = () => {
+    this.setState({ alertResendResult: alertTypes.NONE });
+  }
  
   handleDelete = (item) => {
+    this.setAlertResendResultNone();
+
     userService.deleteUser(item.user)
       .then(() => this.refreshList())
       .catch(err => console.log(err));
-  };
+  }
   
   // Create item
   createItem = () => {
+    this.setAlertResendResultNone();
+
     const item = { 
       userAuth: {
 				id: "",
@@ -116,12 +132,22 @@ class UserEditor extends Component {
       },
     };
     this.setState({ activeItem: item, modal: !this.state.modal });
-  };
+  }
  
   //Edit item
   editItem = (item) => {
-    this.setState({ activeItem: item, modal: !this.state.modal });
-  };
+    this.setState({ activeItem: item, modal: !this.state.modal, successMsg: false });
+  }
+
+  // Resend password
+  resendPsw = (item) => {
+    userService.resendPswUserAuth(item)
+      .then(res => this.setState({ alertResendResult: alertTypes.SUCCESS }))
+      .catch(err => {
+        console.log(err);
+        this.setState({ alertResendResult: alertTypes.ERROR });
+      });
+  }
 
   // Set list of all projects
   setJobsList = () => {
@@ -132,7 +158,17 @@ class UserEditor extends Component {
         this.setState({ allJobsList: jobs });
       })
       .catch(err => console.log(err));
-  };
+  }
+
+  getAlertResendResult = () => {
+    if (this.state.alertResendResult === alertTypes.SUCCESS) {
+      return <Alert variant="outlined">Новый пароль отправлен на почту.</Alert>;
+    }
+    if (this.state.alertResendResult === alertTypes.ERROR) {
+      return <Alert variant="outlined" severity="error">Ошибка. Не удалось отправить новый пароль на почту.</Alert>;
+    }
+    return <div></div>;
+  }
  
   render() {
     return (
@@ -140,12 +176,13 @@ class UserEditor extends Component {
         <h3 className="text-success text-uppercase text-center my-4">
           Пользователи
         </h3>
-        <div className="col-md-6 col-sm-60 mx-auto p-0">        
+        <div className="col-md-7 col-sm-60 mx-auto p-0">        
           <div className="">
-            <button onClick={this.createItem} className="btn btn-info m-2">
+            <button onClick={this.createItem} className="btn btn-info m-3">
               Зарегистрировать пользователя
             </button>
           </div>
+          {this.getAlertResendResult()}
           { 
             this.state.usersList.length > 0 ? 
             <Table className="mt-4" striped> 

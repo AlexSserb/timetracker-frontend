@@ -23,6 +23,11 @@ class UserService {
     return axios.put("userAuth", userAuth, { header: authHeader() });
   }
 
+  /* Resend the password for user with UserAuth data */
+  resendPswUserAuth(userAuth) {
+    return axios.post("/auth/resend", userAuth, { header: authHeader() });
+  }
+
   /* Delete User object by User.ID */
   deleteUser(user) {
     return axios.delete(API_URL + `/${user.id}`, { headers: authHeader() });
