@@ -19,7 +19,7 @@ class JobEditor extends Component {
     this.refreshList();
   }
  
-  componentDidMount() {
+  componentDidMount = () => {
     this.refreshList();
   }
   
@@ -57,16 +57,8 @@ class JobEditor extends Component {
         .catch(err => console.log(err));
       return;
     }
-		alert(JSON.stringify(item));
     // if new post to submit
     jobService.postJob(item)
-      .then(() => this.refreshList())
-      .catch(err => console.log(err));
-  };
- 
-  // Delete item
-  handleDelete = (item) => {
-    jobService.deleteProject(item)
       .then(() => this.refreshList())
       .catch(err => console.log(err));
   };

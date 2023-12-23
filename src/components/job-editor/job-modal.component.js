@@ -12,7 +12,7 @@ import {
 } from "reactstrap";
 
 
-class DayModal extends Component {
+class JobModal extends Component {
   constructor(props) {
     super(props);
 
@@ -55,4 +55,4 @@ class DayModal extends Component {
     );
   }
 }
-export default DayModal;
+export default JobModal;
