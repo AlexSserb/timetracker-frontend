@@ -5,9 +5,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import EmailIcon from '@mui/icons-material/Email';
 
-import userService from "../../services/user.service";
-import UserModal from "./user-modal.component";
-import jobsService from "../../services/job.service";
+import userService from "../../services/UserService";
+import UserModal from "./UserModal";
+import jobsService from "../../services/JobService";
 import { Alert } from "@mui/material";
 
 

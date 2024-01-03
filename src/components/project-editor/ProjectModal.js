@@ -10,7 +10,7 @@ import {
   Input,
   Label
 } from "reactstrap";
-import projectService from "../../services/project.service";
+import projectService from "../../services/ProjectService";
 import userService from "../../services/user.service";
 import Select from "react-select";
 

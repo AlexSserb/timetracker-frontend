@@ -1,41 +1,45 @@
 import React, { Component } from "react";
-import JobModal from './job-modal.component';
+import ProjectModal from './ProjectModal';
 import { Table } from "reactstrap";
+import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
 
-import jobService from "../../services/job.service";
+import ProjectService from "../../services/ProjectService";
 
-// List of job editor
-class JobEditor extends Component {
+// List of projects editor
+class ProjectEditor extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: { job: { id: "", name: "" } },
-      jobsList: []
+      curProjectId: -1,
+      projectsList: []
     };
 
     this.refreshList();
   }
  
-  componentDidMount = () => {
+  componentDidMount() {
     this.refreshList();
   }
   
   refreshList = () => {
-    jobService.getAllJobs()
-      .then(res => this.setState({ jobsList: res.data }))
+    ProjectService.getAllActiveProjects()
+      .then(res => this.setState({ projectsList: res.data }))
       .catch(err => console.log(err));
   };
  
   renderItems = () => {
-    return this.state.jobsList.map((job) => (
+    return this.state.projectsList.map((project) => (
       <tr> 
-        <td>{job.name}</td>
+        <td>{project.name}</td>
         <td>
-          <Button onClick={() => this.editItem(job)}>
+          <Button onClick={() => this.editItem(project)}>
             <EditIcon/>
+          </Button>
+          <Button onClick={() => this.handleDelete(project)}>
+            <DeleteIcon/>
           </Button>
         </td>
       </tr>
@@ -50,45 +54,52 @@ class JobEditor extends Component {
   // Submit an item
   handleSubmit = (item) => {
     this.toggle();
-    if (item.job.id) {
+    if (item.project.id) {
       // if old post to edit and submit
-      jobService.putJob(item)
+      ProjectService.putProject(item)
         .then(() => this.refreshList())
         .catch(err => console.log(err));
       return;
     }
     // if new post to submit
-    jobService.postJob(item)
+    ProjectService.postProject(item)
+      .then(() => this.refreshList())
+      .catch(err => console.log(err));
+  };
+ 
+  // Delete item
+  handleDelete = (item) => {
+    ProjectService.deleteProject(item)
       .then(() => this.refreshList())
       .catch(err => console.log(err));
   };
   
   // Create item
   createItem = () => {
-    this.setState({ modal: !this.state.modal });
+    this.setState({ curProjectId: -1, modal: !this.state.modal });
   };
  
   //Edit item
   editItem = (item) => {
-    this.setState({ activeItem: { job: { id: item.id, name: item.name }}, modal: !this.state.modal });
+    this.setState({ curProjectId: item.id, modal: !this.state.modal });
   };
  
   render() {
     return (
       <div>
         <h3 className="text-success text-uppercase text-center my-4">
-          Должности
+          Проекты
         </h3>
         <div className="col-md-3 col-sm-60 mx-auto p-0">
           <div className="mb-2">
             <button onClick={this.createItem} className="btn btn-info">
-              Добавить должность
+              Добавить проект
             </button>
           </div>
           <Table striped> 
             <thead> 
               <tr>
-                <th>Название должности</th>
+                <th>Проект</th>
                 <th></th>
               </tr> 
             </thead> 
@@ -98,8 +109,8 @@ class JobEditor extends Component {
           </Table>
         </div>
         {this.state.modal ? (
-          <JobModal
-						activeItem={this.state.activeItem}
+          <ProjectModal
+            curProjectId={this.state.curProjectId}
             toggle={this.toggle}
             onSave={this.handleSubmit}
           />
@@ -108,4 +119,4 @@ class JobEditor extends Component {
     );
   }
 }
-export default JobEditor;
+export default ProjectEditor;

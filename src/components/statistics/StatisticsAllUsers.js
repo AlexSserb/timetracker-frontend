@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import moment from 'moment';
 import { Input, Form, FormGroup, Label, Button, Table } from "reactstrap";
 import Select from "react-select";
-import projectService from "../../services/project.service";
+import projectService from "../../services/ProjectService";
 import statisticsService from "../../services/statistics.service";
 
 // Statistics of all users for one/all projects

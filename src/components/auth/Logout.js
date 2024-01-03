@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import authService from "../../services/auth.service";
+import authService from "../../services/AuthService";
 
 
 function Logout() {

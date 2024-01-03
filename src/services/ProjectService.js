@@ -1,5 +1,5 @@
 import axios from "axios";
-import authHeader from "./auth-header";
+import authHeader from "./AuthHeader";
 
 const API_URL = "dictionary/project";
 

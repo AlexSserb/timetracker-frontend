@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, Typography, ListItemButton } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
-import authService from '../services/auth.service';
+import authService from '../services/AuthService';
 
 // Main application bar with humburger menu
 const Appbar = () => {

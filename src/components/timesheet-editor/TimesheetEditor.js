@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import DayModal from "./timesheet-modal.component";
+import DayModal from "./TimesheetModal";
 import TimesheetService from "../../services/timesheet.service";
 import { Input, Form, Table } from "reactstrap";
 import moment from "moment";
@@ -7,7 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
 
-import projectService from "../../services/project.service";
+import projectService from "../../services/ProjectService";
 
 
 // Work day editor

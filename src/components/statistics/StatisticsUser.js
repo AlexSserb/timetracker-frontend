@@ -3,8 +3,8 @@ import moment from 'moment';
 import { Form, FormGroup, Label, Button, Table } from "reactstrap";
 import Select from "react-select";
 
-import userService from "../../services/user.service";
-import projectService from "../../services/project.service";
+import userService from "../../services/UserService";
+import projectService from "../../services/ProjectService";
 import { Bar } from "react-chartjs-2"; 
 import {CategoryScale} from 'chart.js'; 
 import Chart from "chart.js/auto";
