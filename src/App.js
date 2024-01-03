@@ -3,16 +3,16 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import moment from 'moment';
 
-import TimesheetEditor from "./components/timesheet-editor/timesheet-editor.component";
-import Appbar from "./components/appbar.component";
-import ProjectEditor from './components/project-editor/project-editor.component';
-import StatisticsAllUsers from './components/statistics/statistics-all-users.component';
-import Login from './components/auth/login.component'
-import StatisticsUser from './components/statistics/statistics-user.component';
-import Logout from './components/auth/logout.component';
-import authService from './services/auth.service';
-import JobEditor from './components/job-editor/job-editor.component';
-import UserEditor from './components/user-editor/user-editor.component';
+import TimesheetEditor from "./components/timesheet-editor/TimesheetEditor";
+import Appbar from "./components/AppBar";
+import ProjectEditor from './components/project-editor/ProjectEditor';
+import StatisticsAllUsers from './components/statistics/StatisticsAllUsers';
+import Login from './components/auth/Login'
+import StatisticsUser from './components/statistics/StatisticsUser';
+import Logout from './components/auth/Logout';
+import authService from './services/AuthService';
+import JobEditor from './components/job-editor/JobEditor';
+import UserEditor from './components/user-editor/UserEditor';
 
 function App() {
   return (

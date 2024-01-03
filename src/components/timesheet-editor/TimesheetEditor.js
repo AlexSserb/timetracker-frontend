@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import DayModal from "./TimesheetModal";
-import TimesheetService from "../../services/timesheet.service";
+import TimesheetService from "../../services/TimesheetService";
 import { Input, Form, Table } from "reactstrap";
 import moment from "moment";
 import DeleteIcon from '@mui/icons-material/Delete';

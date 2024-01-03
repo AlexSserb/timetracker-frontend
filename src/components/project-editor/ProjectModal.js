@@ -11,7 +11,7 @@ import {
   Label
 } from "reactstrap";
 import projectService from "../../services/ProjectService";
-import userService from "../../services/user.service";
+import userService from "../../services/UserService";
 import Select from "react-select";
 
 

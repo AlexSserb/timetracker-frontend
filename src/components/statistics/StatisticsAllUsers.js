@@ -3,7 +3,7 @@ import moment from 'moment';
 import { Input, Form, FormGroup, Label, Button, Table } from "reactstrap";
 import Select from "react-select";
 import projectService from "../../services/ProjectService";
-import statisticsService from "../../services/statistics.service";
+import statisticsService from "../../services/StatisticsService";
 
 // Statistics of all users for one/all projects
 class StatisticsAllUsers extends Component {
