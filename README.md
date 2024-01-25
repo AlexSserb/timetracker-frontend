@@ -26,6 +26,9 @@ It was required to develop a system where there are two types of users:
   - Statistics on all users. It is necessary to make output for a specific project or for all projects at the choice of the manager.
   - Statistics for one user on a weekly basis with the output of hours of work on the chart.
 
+*This repository is the frontend part of the application.* I acted in the team as a frontend developer. The backend part is written in Java Spring by my two co-commanders, link to the repository: 
+https://github.com/WellRodo/timetracker-be.git
+
 <a name="technologies"></a>
 ## Technologies
 * JavaScript
