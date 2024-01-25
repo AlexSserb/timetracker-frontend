@@ -31,23 +31,23 @@ class JobModal extends Component {
     const { toggle, onSave } = this.props;
     return (
       <Modal isOpen={true} toggle={toggle}>
-        <ModalHeader toggle={toggle}> Должность </ModalHeader>
+        <ModalHeader toggle={toggle}> Position at work </ModalHeader>
         <ModalBody>
          
           <Form onSubmit={() => onSave(this.state.activeItem)}>
             <FormGroup>
-              <Label for="name">Название должности</Label>
+              <Label for="name">Name of position</Label>
               <Input
                 required
                 type="text"
                 name="name"
                 value={this.state.activeItem.job.name}
                 onChange={this.handleChangeName}
-                placeholder="Введите название должности"
+                placeholder="Enter the name of position"
               />
             </FormGroup>
             <Button color="success">
-              Сохранить
+              Save
             </Button>
           </Form>
         </ModalBody>

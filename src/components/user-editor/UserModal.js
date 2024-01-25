@@ -60,30 +60,30 @@ class UserModal extends Component {
     const { toggle, onSave } = this.props;
     return (
       <Modal isOpen={true} toggle={toggle}>
-        <ModalHeader toggle={toggle}> Пользователь </ModalHeader>
+        <ModalHeader toggle={toggle}> User </ModalHeader>
         <ModalBody>
           <Form onSubmit={() => onSave(this.state.activeItem)}>
             <FormGroup>
-              <Label for="login">Почта</Label>
+              <Label for="login">Email</Label>
               <Input
                 required
                 type="email"
                 name="login"
                 value={this.state.activeItem.userAuth.login}
                 onChange={this.handleChangeLogin}
-                placeholder="Введите почту"
+                placeholder="Enter email"
               />
             </FormGroup>
 
 						<FormGroup>
-              <Label for="user.name">Имя</Label>
+              <Label for="user.name">Name</Label>
               <Input
                 required
                 type="text"
                 name="user.name"
                 value={this.state.activeItem.userAuth.user.name}
                 onChange={this.handleChangeName}
-                placeholder="Введите имя"
+                placeholder="Enter name"
               />
             </FormGroup>
 
@@ -95,22 +95,22 @@ class UserModal extends Component {
                 checked={this.state.activeItem.userAuth.managerRole}
                 onChange={this.handleChangeIsManager}
               />
-							<Label for="managerRole">Является руководителем проектов</Label>
+							<Label for="managerRole">Is a project manager</Label>
             </FormGroup>
  
             <FormGroup>
-              <Label for="jobId">Должность</Label>
+              <Label for="jobId">Position at work</Label>
               <Select 
                 required
                 onChange={this.onChangeJob}
                 value={this.getValue()}
                 options={this.state.allJobsList} 
-                placeholder="Выберите должность"
+                placeholder="Select position at work"
               />
             </FormGroup>
 
             <Button color="success">
-              Сохранить
+              Save
             </Button>
           </Form>
         </ModalBody>

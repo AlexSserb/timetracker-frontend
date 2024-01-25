@@ -52,12 +52,12 @@ function Login(props) {
   return (
     <div className="card card-container col-md-3 col-sm-60 mx-auto p-0 mt-5">
 	  	<h3 className="text-success text-uppercase text-center mt-4">
-        Вход
+        Login
       </h3>
       <div className="m-4">
         <Form>
           <FormGroup>
-            <Label for="email">Почта</Label>
+            <Label for="email">Email</Label>
             <Input
               type="text"
               name="email"
@@ -67,7 +67,7 @@ function Login(props) {
           </FormGroup>
 
           <FormGroup>
-            <Label for="password">Пароль</Label>
+            <Label for="password">Password</Label>
             <Input
               type="password"
               name="password"

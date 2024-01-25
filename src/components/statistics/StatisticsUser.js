@@ -104,7 +104,7 @@ class StatisticsUser extends Component {
         <Table bordered> 
           <thead> 
             <tr>
-              <th>Проект</th>
+              <th>Project</th>
               {
                 this.state.chartData.labels.map((label) => (
                   <th>{label}</th>
@@ -182,12 +182,12 @@ class StatisticsUser extends Component {
     return (
       <div>
         <h3 className="text-success text-uppercase text-center my-4">
-          Статистика пользователя
+          User stats
         </h3>
         <div className="row">
           <Form className="col-md-3 col-sm-10 mx-5 p-0">
 						<FormGroup>
-							<Label for="curProject">Проекты</Label>
+							<Label for="curProject">Projects</Label>
 							<Select 
 								onChange={this.onChangeProject}
 								value={this.state.selectedProjects}
@@ -195,7 +195,7 @@ class StatisticsUser extends Component {
 								isSearchable={true}
 								isMulti
 							/>
-							<Label for="curUser">Работник</Label>
+							<Label for="curUser">Employee</Label>
 							<Select 
 								onChange={this.onChangeUser}
 								value={this.getValueUser()}
@@ -204,10 +204,10 @@ class StatisticsUser extends Component {
 							/>
             </FormGroup>
 						<Button color="success" onClick={this.handleSubmit}>
-            	Показать статистику о сотрудникe
+              Show statistics about an employee
           	</Button>
-            <Button className="m-2" onClick={this.goBackFourWeeks}>На 4 недели назад</Button>
-						<Button onClick={this.goForwardFourWeeks}>На 4 недели вперед</Button>
+            <Button className="m-2" onClick={this.goBackFourWeeks}>4 weeks ago</Button>
+						<Button onClick={this.goForwardFourWeeks}>4 weeks ahead</Button>
           </Form>
           <div className="col-md-7 mx-5 p-0">
             <div className="card p-2">

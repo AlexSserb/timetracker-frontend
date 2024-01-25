@@ -59,7 +59,7 @@ class TimesheetEditor extends Component {
   renderItems = () => {
     return this.state.projectsList.map((project) => (
       <tr> 
-        <td>{project.workTime} ч.</td>
+        <td>{project.workTime} h.</td>
         <td>{project.project.name}</td> 
         <td>{project.description}</td>
         { this.state.isFinished ? "" : (
@@ -158,27 +158,29 @@ class TimesheetEditor extends Component {
     return (
       <div>
         <h3 className="text-success text-uppercase text-center my-4">
-          Рабочий день {this.state.day}
+          Working day {this.state.day}
         </h3>
         <div className="col-md-6 col-sm-60 mx-auto p-0">
-          <Form className="col-md-3 col-sm-10 mx-auto p-0"><Input
-            type="date"
-            name="day"
-            value={this.state.day}
-            onChange={this.handleChangeDate}
-            onBlur={this.refreshList}
-          /></Form>
+          <Form className="col-md-3 col-sm-10 mx-auto p-0">
+            <Input
+              type="date"
+              name="day"
+              value={this.state.day}
+              onChange={this.handleChangeDate}
+              onBlur={this.refreshList}
+            />
+          </Form>
           { this.state.isFinished ? "" : (
             <div className="">
               <button onClick={this.createItem} className="btn btn-info m-2">
-                Добавить проект
+                Add project
               </button>
               <button onClick={this.makeItemsFinished} className="btn btn-success m-2" 
                 disabled={this.state.projectsList.length === 0}>
-                Отправить
+                Send and block
               </button>
               <div>
-                Часов отработано: {this.state.sumWorkTime}
+                Hours worked: {this.state.sumWorkTime}
               </div>
             </div>
           )}
@@ -187,9 +189,9 @@ class TimesheetEditor extends Component {
             <Table className="mt-4" striped> 
               <thead> 
                 <tr> 
-                  <th>Время</th> 
-                  <th>Проект</th>
-                  <th>Комментарий</th> 
+                  <th>Time</th> 
+                  <th>Project</th>
+                  <th>Comment</th> 
                   <th></th>
                 </tr> 
               </thead> 
@@ -197,7 +199,7 @@ class TimesheetEditor extends Component {
                 {this.renderItems()}
               </tbody> 
             </Table> 
-            : <div className="mt-3">Нет таймшитов для данной даты</div>
+            : <div className="mt-3">There are no timesheets for this date</div>
           }
         </div>
         {this.state.modal ? (

@@ -115,35 +115,35 @@ class ProjectModal extends Component {
     const { toggle  } = this.props;
     return (
       <Modal isOpen={true} toggle={toggle}>
-        <ModalHeader toggle={toggle}> Проект </ModalHeader>
+        <ModalHeader toggle={toggle}> Project </ModalHeader>
         <ModalBody>
           <Form onSubmit={this.onSubmit}>
             <FormGroup>
-              <Label for="project.name">Название</Label>
+              <Label for="project.name">Name</Label>
               <Input
                 required 
                 type="text"
                 name="project.name"
                 value={this.state.activeItem.project.name}
                 onChange={this.handleChange}
-                placeholder="Введите название проекта"
+                placeholder="Enter project name"
               />
             </FormGroup>
             <FormGroup>
-              <Label for="userList">Работники</Label>
+              <Label for="userList">Employees</Label>
 							<Select 
                 required
 								onChange={this.onChangeUserList}
 								value={this.state.selectedUsers}
 								options={this.state.allSelectorUsers}
 								isSearchable={true}
-                placeholder="Выберите работников"
+                placeholder="Select employees"
 								isMulti
 							/>
             </FormGroup>
 
             <Button color="success">
-              Сохранить
+              Save
             </Button>
           </Form>
         </ModalBody>

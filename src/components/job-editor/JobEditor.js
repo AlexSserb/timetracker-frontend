@@ -77,18 +77,18 @@ class JobEditor extends Component {
     return (
       <div>
         <h3 className="text-success text-uppercase text-center my-4">
-          Должности
+          Positions at work
         </h3>
         <div className="col-md-3 col-sm-60 mx-auto p-0">
           <div className="mb-2">
             <button onClick={this.createItem} className="btn btn-info">
-              Добавить должность
+              Add a position
             </button>
           </div>
           <Table striped> 
             <thead> 
               <tr>
-                <th>Название должности</th>
+                <th>Name of position</th>
                 <th></th>
               </tr> 
             </thead> 

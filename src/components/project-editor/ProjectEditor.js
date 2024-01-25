@@ -88,18 +88,18 @@ class ProjectEditor extends Component {
     return (
       <div>
         <h3 className="text-success text-uppercase text-center my-4">
-          Проекты
+          Projects
         </h3>
         <div className="col-md-3 col-sm-60 mx-auto p-0">
           <div className="mb-2">
             <button onClick={this.createItem} className="btn btn-info">
-              Добавить проект
+              Add project
             </button>
           </div>
           <Table striped> 
             <thead> 
               <tr>
-                <th>Проект</th>
+                <th>Project</th>
                 <th></th>
               </tr> 
             </thead> 

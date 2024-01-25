@@ -41,14 +41,14 @@ class StatisticsAllUsers extends Component {
                       className="list-group-item d-flex justify-content-between align-items-center"
                       >
                       <span className="mx-4">{ project.projectName }</span>
-                      <span className="mx-4">{ project.time } ч.</span>
+                      <span className="mx-4">{ project.time } h.</span>
                     </li>
                   ))
                 }
               </ul>
             </div>
             )
-            : <div>Нет привязанных проектов</div>
+            : <div>There are no linked projects</div>
           }
         </td>
       </tr>
@@ -91,7 +91,7 @@ class StatisticsAllUsers extends Component {
     projectService.getAllActiveProjects()
       .then(res => {
         let projects = res.data.map(proj => { return { value: proj.id, label: proj.name }});
-        projects.unshift({ value: 0, label: "Все проекты" });
+        projects.unshift({ value: 0, label: "All projects" });
         this.setState({ allProjectsList: projects });
       })
       .catch(err => console.log(err));
@@ -106,12 +106,12 @@ class StatisticsAllUsers extends Component {
       <Table className="mt-4"> 
         <thead> 
           <tr> 
-            <th>Имя</th> 
-            <th>Должность</th>
+            <th>Name</th> 
+            <th>Position at work</th>
             {
               this.state.curProject === 0 ?
-              <th>Проекты и отработанные часы</th>
-              : <th>Отработано часов</th>
+              <th>Projects and hours worked</th>
+              : <th>Hours worked</th>
             }
           </tr> 
         </thead> 
@@ -130,12 +130,12 @@ class StatisticsAllUsers extends Component {
     return (
       <div>
         <h3 className="text-success text-uppercase text-center my-4">
-          Статистика всех пользователей
+          Statistics of all users
         </h3>
         <div className="row">
           <Form className="col-md-3 col-sm-10 mx-auto p-0">
 						<FormGroup>
-              <Label for="dateStart">Период</Label>
+              <Label for="dateStart">Period</Label>
               <Input
                 type="date"
                 name="dateStart"
@@ -148,7 +148,7 @@ class StatisticsAllUsers extends Component {
                 value={this.state.dateEnd}
                 onChange={this.handleChangeDate}
               />
-              <Label for="curProject">Проект</Label>
+              <Label for="curProject">Project</Label>
               <Select 
                 onChange={this.onChange}
                 value={this.getValue()}
@@ -157,7 +157,7 @@ class StatisticsAllUsers extends Component {
               />
             </FormGroup>
 						<Button color="success" onClick={this.handleSubmit}>
-            	Показать статистику о сотрудниках
+              Show statistics about employees
           	</Button>
           </Form>
           <div className="col-md-6 mx-auto p-0">
@@ -166,7 +166,7 @@ class StatisticsAllUsers extends Component {
                 { 
                   this.state.usersList.length > 0 ? 
                   this.createTable()
-                  : <div>Нет таймшитов за данный период</div>
+                  : <div>There are no timesheets for this period</div>
                 }
               </ul>
             </div>

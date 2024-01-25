@@ -63,7 +63,7 @@ class UserEditor extends Component {
       <tr> 
         <td>{obj.userAuth.user.name}</td>
 				<td>{obj.userAuth.login}</td>
-        <td>{obj.userAuth.managerRole ? "Да" : "Нет"}</td> 
+        <td>{obj.userAuth.managerRole ? "Yes" : "No"}</td> 
 				<td>{obj.userAuth.user.job.name}</td>
         <td>
           <Button className="px-0" onClick={() => this.editItem(obj)}>
@@ -162,10 +162,10 @@ class UserEditor extends Component {
 
   getAlertResendResult = () => {
     if (this.state.alertResendResult === alertTypes.SUCCESS) {
-      return <Alert variant="outlined">Новый пароль отправлен на почту.</Alert>;
+      return <Alert variant="outlined">The new password has been sent to the email.</Alert>;
     }
     if (this.state.alertResendResult === alertTypes.ERROR) {
-      return <Alert variant="outlined" severity="error">Ошибка. Не удалось отправить новый пароль на почту.</Alert>;
+      return <Alert variant="outlined" severity="error">Error. The new password could not be sent to the email.</Alert>;
     }
     return <div></div>;
   }
@@ -174,12 +174,12 @@ class UserEditor extends Component {
     return (
       <div>
         <h3 className="text-success text-uppercase text-center my-4">
-          Пользователи
+          Users
         </h3>
-        <div className="col-md-7 col-sm-60 mx-auto p-0">        
+        <div className="col-md-8 col-sm-80 mx-auto p-0">        
           <div className="">
             <button onClick={this.createItem} className="btn btn-info m-3">
-              Зарегистрировать пользователя
+              Register a user
             </button>
           </div>
           {this.getAlertResendResult()}
@@ -188,10 +188,10 @@ class UserEditor extends Component {
             <Table className="mt-4" striped> 
               <thead> 
                 <tr> 
-                  <th>Имя</th> 
-                  <th>Логин</th>
-                  <th>РП</th> 
-									<th>Должность</th>
+                  <th>Name</th> 
+                  <th>Email</th>
+                  <th>Is project manager</th> 
+									<th>Position at work</th>
                   <th></th>
                 </tr> 
               </thead> 
@@ -199,7 +199,7 @@ class UserEditor extends Component {
                 {this.renderItems()}
               </tbody> 
             </Table> 
-            : <div className="mt-3">Нет пользователей</div>
+            : <div className="mt-3">There are no users</div>
           }
         </div>
         {this.state.modal ? (

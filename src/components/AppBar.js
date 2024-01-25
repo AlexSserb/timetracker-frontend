@@ -9,18 +9,18 @@ const Appbar = () => {
   const [open, setOpen] = useState(false);
 
   const itemsForManager = [
-    { to: "/", label: "Редактирование рабочего дня" },
-    { to: "/projectEdit", label: "Редактирование проектов" },
-    { to: "/jobEdit", label: "Редактирование должностей" },
-    { to: "/userEdit", label: "Редактирование пользователей" },
-    { to: "/statisticsAllUsers", label: "Статистика всех пользователей" },
-    { to: "/statisticsUserByWeeks", label: "Статистика пользователя" },
-    { to: "/logout", label: "Выйти" }
+    { to: "/", label: "Editor of the working day" },
+    { to: "/projectEdit", label: "Project Editor" },
+    { to: "/jobEdit", label: "Editor of Employee positions" },
+    { to: "/userEdit", label: "User Editor" },
+    { to: "/statisticsAllUsers", label: "Statistics of all users" },
+    { to: "/statisticsUserByWeeks", label: "User statistics" },
+    { to: "/logout", label: "Logout" }
   ]
 
   const itemsForOrdinalUser = [
-    { to: "/", label: "Редактирование рабочего дня" },
-    { to: "/logout", label: "Выйти" }
+    { to: "/", label: "Editor of the working day" },
+    { to: "/logout", label: "Logout" }
   ]
 
   const handleDrawerOpen = () => {
@@ -57,7 +57,7 @@ const Appbar = () => {
       </AppBar>
         { authService.getCurrentUser() ? (
           <Drawer open={open} onClose={handleDrawerClose}>
-            <h3 className='p-3'>Меню</h3>
+            <h3 className='p-3'>Menu</h3>
             <List className='p-0 m-0 border-bottom'>
               { authService.isManagerCurrUser() ? (
                 itemsForManager.map(item => listItem(item))

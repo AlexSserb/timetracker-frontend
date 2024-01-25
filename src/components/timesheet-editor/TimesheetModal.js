@@ -44,12 +44,12 @@ class DayModal extends Component {
     const { toggle, onSave } = this.props;
     return (
       <Modal isOpen={true} toggle={toggle}>
-        <ModalHeader toggle={toggle}> Проект </ModalHeader>
+        <ModalHeader toggle={toggle}> Project </ModalHeader>
         <ModalBody>
          
           <Form onSubmit={() => onSave(this.state.activeItem)}>
             <FormGroup>
-              <Label for="workTime">Количество часов, потраченное на проект</Label>
+              <Label for="workTime">The number of hours spent on the project</Label>
               <Input
                 required
                 type="number"
@@ -58,34 +58,34 @@ class DayModal extends Component {
                 name="workTime"
                 value={this.state.activeItem.workTime}
                 onChange={this.handleChange}
-                placeholder="Введите количество часов, потраченное на проект"
+                placeholder="Enter the number of hours spent on the project"
               />
             </FormGroup>
  
             <FormGroup>
-              <Label for="projectId">Проект</Label>
+              <Label for="projectId">Project</Label>
               <Select 
                 required
                 onChange={this.onChange}
                 value={this.getValue()}
                 options={this.state.allProjectsList} 
-                placeholder="Выберите проект"
+                placeholder="Select a project"
               />
             </FormGroup>
  
             <FormGroup>
-              <Label for="description">Комментарий</Label>
+              <Label for="description">Comment</Label>
               <Input
                 type="textarea"
                 name="description"
                 value={this.state.activeItem.description}
                 onChange={this.handleChange}
-                placeholder="Введите комментарий"
+                placeholder="Enter a comment"
               />
             </FormGroup>
 
             <Button color="success">
-              Сохранить
+              Save
             </Button>
           </Form>
         </ModalBody>
