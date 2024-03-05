@@ -45,16 +45,23 @@ https://github.com/WellRodo/timetracker-be.git
 
 <a name="installation"></a>
 ## Installation
+
 1. Clone the repository:
-```commandline
-git clone https://github.com/AlexSserb/timetracker-frontend.git
-```
-2. Run the application:
-```commandline
-cd timetracker-frontend
-npm i
-npm start
-```
+    ```commandline
+    git clone https://github.com/AlexSserb/timetracker-frontend.git
+    ```
+
+2. Copy `.env.example` file as `.env` and update with the following fields with your backend server credentials:
+    ```
+    REACT_APP_BASE_URL=http://example.com
+    ```
+
+3. Run the application:
+    ```commandline
+    cd timetracker-frontend
+    npm i
+    npm start
+    ```
 
 ___
 <a name="features"></a>

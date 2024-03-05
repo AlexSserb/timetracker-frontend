@@ -1,19 +1,18 @@
 import axios from "axios";
-import authHeader from "./AuthHeader";
 
-const API_URL = "dictionary/project";
+const API_URL = "/dictionary/project";
 
 class ProjectService {
   getAllActiveProjects() {
-    return axios.get(API_URL + "/all/true", { headers: authHeader() });
+    return axios.get(API_URL + "all/true");
   }
 
   getProject(projectId) {
-    return axios.get(API_URL + `/${projectId}`, { headers: authHeader() })
+    return axios.get(API_URL + `/${projectId}`)
   }
 
   getUsersForProject(projectId) {
-    return axios.get(API_URL + `/${projectId}/usersList`, { headers: authHeader() });
+    return axios.get(API_URL + `/${projectId}/usersList`);
   }
 
   getStatOneUserByWeeks(monthDate, projectIDs, employeeID) {
@@ -23,19 +22,19 @@ class ProjectService {
       "employeeID": employeeID
     };
 
-    return axios.post(API_URL + "/employee", data, { headers: authHeader() });
+    return axios.post(API_URL + "/employee", data);
   }
 
   putProject(project) {
-    return axios.put(API_URL, project, { headers: authHeader() });
+    return axios.put(API_URL, project);
   }
 
   postProject(project) {
-    return axios.post(API_URL, project, { headers: authHeader() });
+    return axios.post(API_URL, project);
   }
 
   deleteProject(project) {
-    return axios.delete(API_URL + `/${project.id}`, { headers: authHeader() });
+    return axios.delete(API_URL + `/${project.id}`);
   }
 }
 

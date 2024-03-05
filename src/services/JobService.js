@@ -1,27 +1,26 @@
 import axios from "axios";
-import authHeader from "./AuthHeader";
 
-const API_URL = "dictionary/job";
+const API_URL = "/dictionary/job";
 
 class JobService {
   getAllJobs() {
-    return axios.get(API_URL + "/all", { headers: authHeader() });
+    return axios.get(API_URL + "/all");
   }
 
   getJob(jobId) {
-    return axios.get(API_URL + `/${jobId}`, { headers: authHeader() })
+    return axios.get(API_URL + `/${jobId}`);
   }
 
   putJob(job) {
-    return axios.put(API_URL, job, { headers: authHeader() });
+    return axios.put(API_URL, job);
   }
 
   postJob(job) {
-    return axios.post(API_URL, job, { headers: authHeader() });
+    return axios.post(API_URL, job);
   }
 
   deleteJob(job) {
-    return axios.delete(API_URL + `/${job.job.id}`, { headers: authHeader() });
+    return axios.delete(API_URL + `/${job.job.id}`);
   }
 }
 

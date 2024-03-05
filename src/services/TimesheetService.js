@@ -1,28 +1,27 @@
 import axios from "axios";
-import authHeader from "./AuthHeader";
 
-const API_URL = "timesheet/day";
+const API_URL = "/timesheet/day";
 
 class TimesheetService {
   getTimesheetsForCurrentDay(day) {
-    return axios.get(API_URL + `/${day}`, { headers: authHeader() });
+    return axios.get(API_URL + `/${day}`);
   }
 
   putTimesheet(timesheet) {
-    return axios.put(API_URL + `/${timesheet.id}`, timesheet, { headers: authHeader() });
+    return axios.put(API_URL + `/${timesheet.id}`, timesheet);
   }
 
   postTimesheet(timesheet) {
-    return axios.post(API_URL, timesheet, { headers: authHeader() });
+    return axios.post(API_URL, timesheet);
   }
 
   deleteTimesheet(timesheet) {
-    return axios.delete(API_URL + `/${timesheet.id}`, { headers: authHeader() });
+    return axios.delete(API_URL + `/${timesheet.id}`);
   }
 
   putTimesheetsFinished(timesheetIDs) {
     return axios
-      .put(API_URL + "/finish", { "timesheetIDs": timesheetIDs }, { headers: authHeader() })
+      .put(API_URL + "/finish", { "timesheetIDs": timesheetIDs });
   }
 }
 
